@@ -14,10 +14,7 @@ public class NumberProcessor {
 	   public static boolean isExcessive(int input) {
 	     // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
 
-	   		boolean result = false;
-
 	   		int factorSum = 0;
-	   		int doubledNumber = input * 2;
 
 	   		for(int i=1; i<= input; i++) {
 
@@ -27,7 +24,7 @@ public class NumberProcessor {
 	   			}
 	   		}
 
-	   		if(factorSum > doubledNumber)
+	   		if(factorSum > (input * 2))
 	   		{
 	   			return true;
 	   		}
@@ -73,8 +70,6 @@ public class NumberProcessor {
 	         	return false;   
 	    }
 
-	  
-	 
 	  /** 
 		    * 
 		    * This method accepts an  integer and returns true if the number is "Squad", false otherwise.
@@ -88,7 +83,58 @@ public class NumberProcessor {
 	  
 	   public static boolean isSquad(long num) {
 	     // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
-	        throw new RuntimeException("not implemented!");
+
+	   		String factorOne = "";
+	   		String factorTwo = "";
+
+	   		String numStr = Long.toString(num);
+
+	   		if(numStr.length() % 2 != 0)
+	   		{
+	   			return false;
+	   		}
+
+	   		int start = (int) Math.pow(10, (numStr.length() / 2) - 1);
+	   		int end = (int) Math.pow(10, (numStr.length() / 2));
+
+	   		int product = 0;
+
+	   		outerLoop:
+	   		for(int i = start; i < end; i++)
+	   		{
+	   			for(int j = i; j < end; j++)
+	   			{
+	   				product = i * j;
+	   				//System.out.println(product);
+
+	   				if(product == num)
+	   				{
+	   					factorOne = Long.toString(i);
+	   					factorTwo = Long.toString(j);
+
+	   					if((factorOne.charAt(factorOne.length() - 1) == '0') && (factorTwo.charAt(factorTwo.length() - 1) == '0'))
+	   					{
+	   						continue outerLoop;
+	   					}
+
+	   					for(int k=0; k< factorOne.length(); k++)
+	   					{
+	   						if((!numStr.contains("" + factorOne.charAt(k))) || (!numStr.contains("" + factorTwo.charAt(k))))
+	   						{
+	   							continue outerLoop;
+	   						}
+	   					}
+	   					return true;
+	   				}
+
+	   				else if(product > num)
+	   				{
+	   					continue outerLoop;
+	   				}
+	   			}
+	   		}
+
+	   		return false;
 	    }
 	         
 	         
@@ -103,8 +149,32 @@ public class NumberProcessor {
 	     
 	  public static int maSequence(int num){
 	     // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
-	        throw new RuntimeException("not implemented!");
-	          }
+
+	  		int nth = 1;
+
+	  		for(int i=1; i< num; i++)
+	  		{
+	  			nth += (5 * i) - (i - 1);
+	  		}
+
+	  		return nth;
+	        
+	    }
+
+	   public static int recurMaSequence(int num) {
+
+	   		if(num == 0)
+	   		{
+	   			return 0;
+	   		}
+
+	   		if(num == 1)
+	   		{
+	   			return 1;
+	   		}
+
+	   		return ((5 * (num - 1)) - (num - 2)) + recurMaSequence(--num);
+	   }
 	         
 	  /** 
 	         * 
@@ -280,6 +350,37 @@ public class NumberProcessor {
 		assert(isPower(150) == false);
 		assert(isPower(593) == true);
 		assert(isPower(1125) == false);
+
+		//isSquad test cases
+
+		assert(isSquad(1530) ==	true);
+		assert(isSquad(109) == false);
+		assert(isSquad(1002) == false);
+		assert(isSquad(1395) == true);
+		assert(isSquad(2187) == true);
+		assert(isSquad(126000) == false);
+		assert(isSquad(150300) == true);
+
+		//maSequence(10);
+
+		
+		assert(recurMaSequence(1) == 1);
+		assert(recurMaSequence(2) == 6);
+		assert(recurMaSequence(3) == 15);
+		assert(recurMaSequence(4) == 28);
+		assert(recurMaSequence(5) == 45);
+		assert(recurMaSequence(6) == 66);
+		assert(recurMaSequence(7) == 91);
+		
+
+		/* (30 * 15)
+109	false(odd number of digits)
+1002	false
+1395	true (93 * 15)
+2187	true (27 * 81)
+126000	false(does not meet the 3rd condition)
+150300	true (300 * 501)
+*/
 
     }
 }
