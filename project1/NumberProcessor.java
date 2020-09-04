@@ -175,6 +175,11 @@ public class NumberProcessor {
 
 	   public static boolean isOneSummative(long num) {
 
+	   		if(num <= 0)
+	   		{
+	   			return false;
+	   		}
+
 	   		int index = 0;
 	   		int foundOccurrences = 0;
 
