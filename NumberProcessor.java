@@ -12,7 +12,11 @@ public class NumberProcessor {
 	    *  
     */
 	   public static boolean isExcessive(int input) {
-	     // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
+
+	   		if(input <= 0)
+	   		{
+	   			return false;
+	   		}
 
 	   		int factorSum = 0;
 
@@ -40,7 +44,6 @@ public class NumberProcessor {
 	    * 
 	    */
 	         public static boolean isPower(long num) {
-	     // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
 
 	         	int i = 2;
 	         	int j = 2;
@@ -82,7 +85,6 @@ public class NumberProcessor {
 	  */  
 	  
 	   public static boolean isSquad(long num) {
-	     // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
 
 	   		String factorOne = "";
 	   		String factorTwo = "";
@@ -146,22 +148,8 @@ public class NumberProcessor {
 	          * The method returns the nth "MaSequence" number. If n is <= 0, it returns 0
 	  	    *
 	  */
-	     
-	  public static int maSequence(int num){
-	     // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
 
-	  		int nth = 1;
-
-	  		for(int i=1; i< num; i++)
-	  		{
-	  			nth += (5 * i) - (i - 1);
-	  		}
-
-	  		return nth;
-	        
-	    }
-
-	   public static int recurMaSequence(int num) {
+	   public static int maSequence(int num) {
 
 	   		if(num <= 0)
 	   		{
@@ -328,6 +316,7 @@ public class NumberProcessor {
 
     	//isExcessive test cases
 
+    	assert(isExcessive(-1) == false);
     	assert(isExcessive(0) == false);
     	assert(isExcessive(11) == false);
     	assert(isExcessive(24) == true);
@@ -364,13 +353,14 @@ public class NumberProcessor {
 		//maSequence(10);
 
 		
-		assert(recurMaSequence(1) == 1);
-		assert(recurMaSequence(2) == 6);
-		assert(recurMaSequence(3) == 15);
-		assert(recurMaSequence(4) == 28);
-		assert(recurMaSequence(5) == 45);
-		assert(recurMaSequence(6) == 66);
-		assert(recurMaSequence(7) == 91);
+		assert(maSequence(-3) == 0);
+		assert(maSequence(1) == 1);
+		assert(maSequence(2) == 6);
+		assert(maSequence(3) == 15);
+		assert(maSequence(4) == 28);
+		assert(maSequence(5) == 45);
+		assert(maSequence(6) == 66);
+		assert(maSequence(7) == 91);
 		
 
 		/* (30 * 15)
