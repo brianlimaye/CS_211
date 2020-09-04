@@ -1,8 +1,7 @@
 
 import java.util.Scanner;
 
-public class NumberProcessor {
-	
+public class NumberProcessor {	
 	
 	/** 
 	    *
@@ -161,7 +160,7 @@ public class NumberProcessor {
 	   			return 1;
 	   		}
 
-	   		return ((5 * (num - 1)) - (num - 2)) + recurMaSequence(--num);
+	   		return ((5 * (num - 1)) - (num - 2)) + maSequence(--num);
 	   }
 	         
 	  /** 
@@ -172,12 +171,58 @@ public class NumberProcessor {
 	         *         * Consider 7: 7^2 = 49; 4^2 + 9^2 = 97; 9^2 + 7^2 = 130; 1^2 + 3^2 + 0^2 = 10; 1^2 + 0^2 = 1.
 	         *
 	         *         *  Consider 392: 3^2 + 9^2 + 2^2 = 94; 9^2 + 4^2 = 97; 9^2+ 7^2 = 130; 1^2 + 3^2 + 0^2 = 10; 1^2 + 0^2 = 1
-	   */   
-	   public static boolean isOneSummative(long num)
-	       	{
-	        	// DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
-	 	        throw new RuntimeException("not implemented!");
-	 	    }
+	   */
+
+	   public static boolean isOneSummative(long num) {
+
+	   		int index = 0;
+	   		int foundOccurrences = 0;
+
+	   		String s = "";
+	   		
+	   		StringBuilder sb = new StringBuilder();
+	   		long newNum = 0;
+	   		String strNum = Long.toString(num);
+
+	   		while(newNum != 1)
+	   		{
+	   			newNum = 0;
+
+	   			for(int i=0; i< strNum.length(); i++)
+	   			{
+	   				newNum += (long) Math.pow(Long.parseLong(strNum.substring(i, i + 1)), 2);
+	   				//System.out.println(newNum);
+	   			}
+
+	   			if(newNum == 1)
+	   			{
+	   				return true;
+	   			}
+
+	   			sb.append("" + newNum + "-");
+	   			s = sb.toString();
+
+	   			System.out.println(s);
+
+	   			while((index = s.indexOf(Long.toString(newNum))) != -1)
+	   			{
+	   				++foundOccurrences;
+	   				s = s.substring(index + Long.toString(newNum).length());
+	   			}
+
+	   			if(foundOccurrences >= 2)
+	   			{
+	   				//System.out.println("reached");
+	   				return false;
+	   			}
+
+	   			foundOccurrences = 0;
+	   			strNum = Long.toString(newNum);
+	   		}
+
+	   		return true;
+	   }
+	 	        
 	         
 	     
       /** 
@@ -302,7 +347,7 @@ public class NumberProcessor {
 
     public static void main(String argv[]) {
 
-    	/*
+    	
     	Scanner sc = new Scanner(System.in);
     	int input = 0;
 
@@ -310,9 +355,9 @@ public class NumberProcessor {
     	{
     		System.out.println("<<<Please enter in an integer.");
     		input = sc.nextInt();
-    		System.out.println(isPower(input));
+    		System.out.println(isOneSummative(input));
     	}
-    	*/
+    	/*
 
     	//isExcessive test cases
 
