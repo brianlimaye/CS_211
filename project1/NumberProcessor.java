@@ -106,7 +106,6 @@ public class NumberProcessor {
 	   			for(int j = i; j < end; j++)
 	   			{
 	   				product = i * j;
-	   				//System.out.println(product);
 
 	   				if(product == num)
 	   				{
@@ -204,12 +203,10 @@ public class NumberProcessor {
 	   				return true;
 	   			}
 
-	   			sb.append("" + newNum + "-");
+	   			sb.append(newNum + "-");
 	   			s = sb.toString();
 
-	   			System.out.println(s);
-
-	   			while((index = s.indexOf(Long.toString(newNum))) != -1)
+	   			while((index = s.indexOf(Long.toString(newNum) + "-")) != -1)
 	   			{
 	   				++foundOccurrences;
 	   				s = s.substring(index + Long.toString(newNum).length());
@@ -217,7 +214,6 @@ public class NumberProcessor {
 
 	   			if(foundOccurrences >= 2)
 	   			{
-	   				//System.out.println("reached");
 	   				return false;
 	   			}
 
@@ -242,7 +238,50 @@ public class NumberProcessor {
 	     
 	   public static  boolean isEvenDual(int array[]) {
 	     // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
-	        throw new RuntimeException("not implemented!");
+
+	   		int len = array.length;
+
+	   		if(len < 3)
+	   		{
+	   			return false;
+	   		}
+
+	   		int offset = 1;
+	   		int currentPos = 0;
+	   		int initialSum = array[0];
+	   		int upperIndex = 2;
+	   		int currentSum = 0;
+
+	   		while(currentPos != len)
+	   		{
+	   			if(currentPos > len)
+	   			{
+	   				return false;
+	   			}
+
+	   			currentPos += offset;
+	   			++offset;
+	   		}
+	   		
+	   		offset = 2;
+
+	   		for(int i = 1; i < len; i++)
+	   		{
+	   			currentSum += array[i];
+
+	   			if(i == upperIndex)
+	   			{
+	   				if(currentSum != initialSum)
+	   				{
+	   					return false;
+	   				}
+	   				currentSum = 0;
+	   				++offset;
+	   				upperIndex += offset;
+	   			}
+	   		}
+
+	   		return true;
 	    }
 
 	 
@@ -353,6 +392,7 @@ public class NumberProcessor {
     public static void main(String argv[]) {
 
     	
+    	/*
     	Scanner sc = new Scanner(System.in);
     	int input = 0;
 
@@ -362,7 +402,7 @@ public class NumberProcessor {
     		input = sc.nextInt();
     		System.out.println(isOneSummative(input));
     	}
-    	/*
+    	*/
 
     	//isExcessive test cases
 
@@ -411,7 +451,20 @@ public class NumberProcessor {
 		assert(maSequence(5) == 45);
 		assert(maSequence(6) == 66);
 		assert(maSequence(7) == 91);
+
+		assert(isOneSummative(7) == true);
+		assert(isOneSummative(5) == false);
+		assert(isOneSummative(392) == true);
 		
+		
+		assert(isEvenDual(new int[] {6, 2, 4, 2, 2, 2, 1, 5, 0, 0}) == true);
+		assert(isEvenDual(new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, -2, -1}) == true);
+		assert(isEvenDual(new int[] {2, 1, 2, 3, 5, 6}) == false);
+		assert(isEvenDual(new int[] {}) == false);
+		assert(isEvenDual(new int[] {0,0}) == false);
+		assert(isEvenDual(new int[] {1,0,1,0,1,0,1,0}) == false);
+
+
 
 		/* (30 * 15)
 109	false(odd number of digits)
