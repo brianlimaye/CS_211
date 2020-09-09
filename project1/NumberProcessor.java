@@ -148,7 +148,8 @@ public class NumberProcessor {
 	  	    *
 	  */
 
-	   public static int maSequence(int num) {
+	   /*
+	   public static int recurMaSequence(int num) {
 
 	   		if(num <= 0)
 	   		{
@@ -162,6 +163,26 @@ public class NumberProcessor {
 
 	   		return ((5 * (num - 1)) - (num - 2)) + maSequence(--num);
 	   }
+	   */
+
+	   public static int maSequence(int num){
+	     // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
+
+	  		if(num <= 0)
+	   		{
+	   			return 0;
+	   		}
+
+	  		int nth = 1;
+
+	  		for(int i = 1; i < num; i++)
+	  		{
+	  			nth += (5 * i) - (i - 1);
+	  		}
+
+	  		return nth;
+
+	    }
 	         
 	  /** 
 	         * 
@@ -362,9 +383,67 @@ public class NumberProcessor {
 	    *               {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, -2, -1}	is also Divisible as it gives sub arrays {0,0,0,0,0,0,0,0,0,0} and {1,1,1,-2,-1})
 	    *
 	  */
+	   private static int calculateSum(String array []) {
+	   		
+	   		int sum = 0;
+
+	   		for(int i = 0; i < array.length; i++)
+	   		{
+	   			sum += Integer.parseInt(array[i]);
+	   		}
+
+	   		return sum;
+	   }
 	   public static boolean isDivisible(int array []) {
 	     // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
-	        throw new RuntimeException("not implemented!");  
+	        
+	        if(array.length == 0)
+	        {
+	        	return false;
+	        }
+
+	        StringBuilder firstSubArray = new StringBuilder();
+	        StringBuilder secondSubArray = new StringBuilder();
+
+	        String[] firstSubSet;
+	        String[] secondSubSet;
+
+	        for(int i = 0; i < array.length; i++)
+	        {
+	        	if(i != 0)
+	        	{
+	        		firstSubArray.append(",");
+	        	}
+	        	firstSubArray.append(array[i]);
+
+	        	for(int j = i + 1; j < array.length; j++)
+	        	{
+	        		if(j != i + 1)
+	        		{
+	        			secondSubArray.append(",");
+	        		}
+	        		secondSubArray.append(array[j]);
+	        	}
+
+	        	if((secondSubArray.toString().length() == 0) || (firstSubArray.toString().length() == 0))
+	        	{
+	        		return false;
+	        	}
+
+	        	firstSubSet = firstSubArray.toString().split(",", array.length);
+	        	//System.out.println(Arrays.toString(firstSubSet));
+	        	secondSubSet = secondSubArray.toString().split(",", array.length);
+	        	//System.out.println(Arrays.toString(secondSubSet));
+
+	        	if(calculateSum(firstSubSet) == calculateSum(secondSubSet))
+	        	{
+	        		return true;
+	        	}
+	        	secondSubArray.setLength(0);
+	        }
+
+	        return false;
+
 	    }
 	
 	   
@@ -514,6 +593,15 @@ public class NumberProcessor {
 		System.out.println(Arrays.equals(incrementalArray(2), new int[] {1, 1, 2}));
 		System.out.println(Arrays.equals(incrementalArray(4), new int[] {1, 1, 2, 1, 2, 3, 1, 2, 3, 4}));
 		System.out.println(Arrays.equals(incrementalArray(6), new int[] {1, 1, 2, 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 6}));
+
+		assert (isDivisible(new int[] {6, 2, 4, 2, 2, 2, 1, 5, 0, 0}) == true);
+		assert (isDivisible(new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, -2, -1}) == true);
+		assert (isDivisible(new int[] {2, 1, 2, 3, 5, 6}) == false);
+		assert (isDivisible(new int[] {}) == false);
+		assert (isDivisible(new int[] {0,0}) == true);
+		assert (isDivisible(new int[] {1,0,1,0,1,0,0,0}) == false);
+
+
 
 
 		/* (30 * 15)
