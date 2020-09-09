@@ -113,12 +113,6 @@ public class NumberProcessor {
 	   					factorOne = Long.toString(i);
 	   					factorTwo = Long.toString(j);
 
-	   					if(num == 1530)
-	   					{
-	   						System.out.println(factorOne);
-	   						System.out.println(factorTwo);
-	   					}
-
 	   					if((factorOne.charAt(factorOne.length() - 1) == '0') && (factorTwo.charAt(factorTwo.length() - 1) == '0'))
 	   					{
 	   						continue outerLoop;
@@ -467,15 +461,21 @@ public class NumberProcessor {
      			return false;
      		}
 
+     		int prevNumber = array[0];
+
      		for(int i = 1; i < array.length; i++)
      		{
-     			if(array[i] < array[i - 1])
+     			if(prevNumber == array[i])
      			{
-     				return false;
+     				return true;
+     			}
+     			else
+     			{
+     				prevNumber = array[i];
      			}
      		}
+     		return false;
 
-     		return true;
           }
 
 
