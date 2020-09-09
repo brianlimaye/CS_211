@@ -113,6 +113,12 @@ public class NumberProcessor {
 	   					factorOne = Long.toString(i);
 	   					factorTwo = Long.toString(j);
 
+	   					if(num == 1530)
+	   					{
+	   						System.out.println(factorOne);
+	   						System.out.println(factorTwo);
+	   					}
+
 	   					if((factorOne.charAt(factorOne.length() - 1) == '0') && (factorTwo.charAt(factorTwo.length() - 1) == '0'))
 	   					{
 	   						continue outerLoop;
@@ -455,8 +461,21 @@ public class NumberProcessor {
 		  
 
      public static boolean isConsecutiveDual(int[] array) {
-	     // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
-           throw new RuntimeException("not implemented!");  
+
+     		if(array.length < 2)
+     		{
+     			return false;
+     		}
+
+     		for(int i = 1; i < array.length; i++)
+     		{
+     			if(array[i] < array[i - 1])
+     			{
+     				return false;
+     			}
+     		}
+
+     		return true;
           }
 
 
@@ -594,12 +613,21 @@ public class NumberProcessor {
 		System.out.println(Arrays.equals(incrementalArray(4), new int[] {1, 1, 2, 1, 2, 3, 1, 2, 3, 4}));
 		System.out.println(Arrays.equals(incrementalArray(6), new int[] {1, 1, 2, 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 6}));
 
-		assert (isDivisible(new int[] {6, 2, 4, 2, 2, 2, 1, 5, 0, 0}) == true);
-		assert (isDivisible(new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, -2, -1}) == true);
-		assert (isDivisible(new int[] {2, 1, 2, 3, 5, 6}) == false);
-		assert (isDivisible(new int[] {}) == false);
-		assert (isDivisible(new int[] {0,0}) == true);
-		assert (isDivisible(new int[] {1,0,1,0,1,0,0,0}) == false);
+		assert(isDivisible(new int[] {6, 2, 4, 2, 2, 2, 1, 5, 0, 0}) == true);
+		assert(isDivisible(new int[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, -2, -1}) == true);
+		assert(isDivisible(new int[] {2, 1, 2, 3, 5, 6}) == false);
+		assert(isDivisible(new int[] {}) == false);
+		assert(isDivisible(new int[] {0,0}) == true);
+		assert(isDivisible(new int[] {1,0,1,0,1,0,0,0}) == false);
+
+		
+		assert(isConsecutiveDual(new int[] {1, 2, 3, 3, 4, 5}) == true);
+		assert(isConsecutiveDual(new int[] { 4, 4 , 4 , 4, 4 }) == true);
+		assert(isConsecutiveDual(new int[] {10, 9, 8, 7, 8, 9}) == false);
+		assert(isConsecutiveDual(new int[] {0,1,0,1,0,1}) == false);
+
+
+
 
 
 
