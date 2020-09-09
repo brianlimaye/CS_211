@@ -1,5 +1,6 @@
 
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class NumberProcessor {	
 	
@@ -195,7 +196,6 @@ public class NumberProcessor {
 	   			for(int i=0; i< strNum.length(); i++)
 	   			{
 	   				newNum += (long) Math.pow(Long.parseLong(strNum.substring(i, i + 1)), 2);
-	   				//System.out.println(newNum);
 	   			}
 
 	   			if(newNum == 1)
@@ -294,13 +294,59 @@ public class NumberProcessor {
 	      *           *if n = 1, it will produce {1}
 	      *           * if n= 2. it produces {1, 1, 2}
 	      *           * if n= 4. it produces {1, 1, 2, 1, 2, 3, 1, 2, 3, 4}
-	      *           * if n= 6. it produces {1, 1, 2, 1, 2, 3, 1, 2, 3, 4,1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 6}
+	      *           * if n= 6. it produces {1, 1, 2, 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 6}
 	      *          
 	  */
 	     
 	  public static int[] incrementalArray(int n) {
 	     // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
-	        throw new RuntimeException("not implemented!");
+
+	        if(n <= 0)
+	        {
+	        	return new int[] {};
+	        }
+
+	        if(n == 1)
+	        {
+	        	return new int[] {1};
+	        }
+
+	        if(n == 2)
+	        {
+	        	return new int[] {1, 1, 2};
+	        }
+
+
+	        int arrSize = 0;
+	        int currentNumber = 1;
+	        int maxNumber = 3;
+	        int [] arr;
+
+	        for(int i = 1; i <= n; i++)
+	        {
+	        	arrSize += i;
+	        }
+
+	        arr = new int[arrSize];
+	        arr[0] = 1;
+	        arr[1] = 1;
+	        arr[2] = 2;
+
+	        for(int j = 3; j < arrSize; j++)
+	        {
+	        	if(currentNumber > maxNumber)
+	        	{
+	        		currentNumber = 1;
+	        		arr[j] = currentNumber;
+	        		++currentNumber;
+	        		++maxNumber;
+	        		continue;
+	        	}
+	        	arr[j] = currentNumber;
+	        	++currentNumber;
+	        }
+
+	        return arr;
 	    }
 
 	   
@@ -464,6 +510,10 @@ public class NumberProcessor {
 		assert(isEvenDual(new int[] {0,0}) == false);
 		assert(isEvenDual(new int[] {1,0,1,0,1,0,1,0}) == false);
 
+		System.out.println(Arrays.equals(incrementalArray(1), new int[] {1}));
+		System.out.println(Arrays.equals(incrementalArray(2), new int[] {1, 1, 2}));
+		System.out.println(Arrays.equals(incrementalArray(4), new int[] {1, 1, 2, 1, 2, 3, 1, 2, 3, 4}));
+		System.out.println(Arrays.equals(incrementalArray(6), new int[] {1, 1, 2, 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 6}));
 
 
 		/* (30 * 15)
