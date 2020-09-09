@@ -492,7 +492,30 @@ public class NumberProcessor {
       */
       public static boolean isPairArray(int array[]) {
         // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
-            throw new RuntimeException("not implemented!");
+            
+           	int firstNum = 0;
+           	int secondNum = 0;
+           	int numOfPairs = 0;
+
+            for(int i = 0; i < array.length; i++)
+            {
+            	firstNum = array[i];
+            	for(int j = 0; j < array.length; j++)
+            	{
+            		if(j == i)
+            		{
+            			continue;
+            		}
+            		secondNum = array[j];
+
+            		if((firstNum + secondNum) == 10)
+            		{
+            			++numOfPairs;
+            		}
+            	}
+            }
+            
+            return numOfPairs == 2;
           }
 //##############################################Honors Section##############################
  /*	
@@ -511,12 +534,12 @@ public class NumberProcessor {
  *  Given an array of integers, find the consecutive elements with the largest sum. 
  *  For example, if the array is {-2, 11, -4, , 13, -5, 2} the maximum sum is 20 which is the sum of the subarray that contains 11, -4, 13.
  *
- *//*
+ */
      public static int maxSum(int array[]) { 
 		 // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
-        throw new RuntimeException("not implemented!");  
+        
+     	return 0;
      }
-	
 	
 	
 	
@@ -625,6 +648,10 @@ public class NumberProcessor {
 		assert(isConsecutiveDual(new int[] { 4, 4 , 4 , 4, 4 }) == true);
 		assert(isConsecutiveDual(new int[] {10, 9, 8, 7, 8, 9}) == false);
 		assert(isConsecutiveDual(new int[] {0,1,0,1,0,1}) == false);
+
+		assert(isPairArray(new int[] {4,10,14, 0}) == true);
+		assert(isPairArray(new int[] {10,3,0,15,7}) == false);
+		assert(isPairArray(new int[] {4,1,11}) == false);
 
 
 
