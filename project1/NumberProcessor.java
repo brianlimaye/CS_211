@@ -13,16 +13,22 @@ public class NumberProcessor {
     */
 	   public static boolean isExcessive(int input) {
 
-	   		if(input <= 0)
+	   		if(input == 0)
 	   		{
 	   			return false;
 	   		}
 
 	   		int factorSum = 0;
+	   		int fixedInput = input;
 
-	   		for(int i=1; i<= input; i++) {
+	   		if(input < 0)
+	   		{
+	   			fixedInput = -input;
+	   		}
 
-	   			if(input % i == 0) {
+	   		for(int i=1; i<= fixedInput; i++) {
+
+	   			if(fixedInput % i == 0) {
 
 	   				factorSum += i;
 	   			}
@@ -262,6 +268,11 @@ public class NumberProcessor {
 
 	   		int len = array.length;
 
+	   		if(len == 1)
+	   		{
+	   			return true;
+	   		}
+
 	   		if(len < 3)
 	   		{
 	   			return false;
@@ -324,7 +335,7 @@ public class NumberProcessor {
 
 	        if(n <= 0)
 	        {
-	        	return new int[] {};
+	        	return null;
 	        }
 
 	        if(n == 1)
@@ -537,8 +548,25 @@ public class NumberProcessor {
  */
      public static int maxSum(int array[]) { 
 		 // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
+
+     	int currentSum = 0;
+     	int maxSum = 0;
+
+     	for(int i = 0; i < array.length; i++) 
+     	{
+     		for(int j = i; j < array.length; j++)
+     		{
+     			currentSum += array[j];
+
+     			if(currentSum > maxSum)
+     			{
+     				maxSum = currentSum;
+     			}
+     		}
+     		currentSum = 0;
+     	}
         
-     	return 0;
+     	return maxSum;
      }
 	
 	
@@ -549,12 +577,59 @@ public class NumberProcessor {
 	 *  For example, if the array is {-2, 11, -4, , 13, -5, 2} the maximum sum is 20 which is the sum of the subarray {11, -4, 13}.
 	 *
 	 */
-/*	
+
 	public static int[] maxSubArray(int array[]) {
 		// DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
-        throw new RuntimeException("not implemented!");  
+
+		if(array.length == 0)
+		{
+			return new int[]{};
+		}
+
+		StringBuilder subArray = new StringBuilder();
+
+		int currentSum = 0;
+     	int maxSum = 0;
+     	String[] tempArr = null;
+     	int[] maxArr;
+
+     	for(int i = 0; i < array.length; i++) 
+     	{
+     		for(int j = i; j < array.length; j++)
+     		{
+     			if(j != i)
+     			{
+     				subArray.append(",");
+     			}
+     			subArray.append(array[j]);
+
+     			currentSum += array[j];
+
+     			if(currentSum > maxSum)
+     			{
+     				maxSum = currentSum;
+     				tempArr = subArray.toString().split(",", array.length);
+     			}
+     		}
+     		currentSum = 0;
+     		subArray.setLength(0);
+     	}
+
+     	if(tempArr == null)
+     	{
+     		return new int[] {};
+     	}
+
+     	maxArr = new int[tempArr.length];
+
+     	for(int k = 0; k < tempArr.length; k++)
+     	{
+     		maxArr[k] = Integer.parseInt(tempArr[k]);
+     	}
+
+     	return maxArr;
+        
     }
-*/
 
     public static void main(String argv[]) {
 
@@ -653,20 +728,13 @@ public class NumberProcessor {
 		assert(isPairArray(new int[] {10,3,0,15,7}) == false);
 		assert(isPairArray(new int[] {4,1,11}) == false);
 
+		assert(maxSum(new int[] {1, -3, 4, -2, -1, 6}) == 7);
+		assert(maxSum(new int[] {-1, -3, 4, -1, -1, 2, 6, -4}) == 10);
+		assert(maxSum(new int[] { -5, -7, -8, -4, -3, -2}) == 0);
 
-
-
-
-
-
-		/* (30 * 15)
-109	false(odd number of digits)
-1002	false
-1395	true (93 * 15)
-2187	true (27 * 81)
-126000	false(does not meet the 3rd condition)
-150300	true (300 * 501)
-*/
+		System.out.println(Arrays.equals(maxSubArray(new int[] {1, -3, 4, -2, -1, 6}), new int[] {4, -2, -1, 6}));
+		System.out.println(Arrays.equals(maxSubArray(new int[] {-1, -3, 4, -1, -1, 2, 6, -4}), new int[] {4, -1, -1, 2, 6}));
+		System.out.println(Arrays.equals(maxSubArray(new int[] { -5, -7, -8, -4, -3, -2}), new int[] {}));
 
     }
 }
