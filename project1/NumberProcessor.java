@@ -148,8 +148,6 @@ public class NumberProcessor {
 	   }
 	   */
     public static int maSequence(int num) {
-        // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
-
         if (num <= 0) {
 
             return 0;
@@ -239,8 +237,6 @@ public class NumberProcessor {
      */
 
     public static boolean isEvenDual(int array[]) {
-        // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
-
         int len = array.length;
 
         if (len == 1) {
@@ -303,8 +299,6 @@ public class NumberProcessor {
      */
 
     public static int[] incrementalArray(int n) {
-        // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
-
         if (n <= 0) {
 
             return null;
@@ -376,8 +370,6 @@ public class NumberProcessor {
     }
 
     public static boolean isDivisible(int array[]) {
-        // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
-
         if (array.length == 0) {
 
             return false;
@@ -467,8 +459,6 @@ public class NumberProcessor {
      * {4,1,11} is not also PairArray as no pair sums to 10
      */
     public static boolean isPairArray(int array[]) {
-        // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
-
         int firstNum = 0;
         int secondNum = 0;
         int numOfPairs = 0;
@@ -511,8 +501,6 @@ public class NumberProcessor {
      * For example, if the array is {-2, 11, -4, , 13, -5, 2} the maximum sum is 20 which is the sum of the subarray that contains 11, -4, 13.
      */
     public static int maxSum(int array[]) {
-        // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
-
         int currentSum = 0;
         int maxSum = 0;
 
@@ -541,8 +529,6 @@ public class NumberProcessor {
      */
 
     public static int[] maxSubArray(int array[]) {
-        // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
-
         if (array.length == 0) {
 
             return new int[]{};
