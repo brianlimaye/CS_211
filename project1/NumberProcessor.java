@@ -37,9 +37,9 @@ public class NumberProcessor {
 
         int i = 2;
         int j = 2;
-        int exponentOne = 0;
+        int exponentOne;
         int exponentTwo = 0;
-        int powerResult = 0;
+        int powerResult;
 
         while (exponentTwo < num) {
 
