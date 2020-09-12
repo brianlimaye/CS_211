@@ -13,31 +13,28 @@ public class NumberProcessor {
     */
 	   public static boolean isExcessive(int input) {
 
-	   		if(input == 0)
-	   		{
-	   			return false;
-	   		}
-
 	   		int factorSum = 0;
 	   		int fixedInput = input;
 
-	   		if(input < 0)
-	   		{
+	   		if(input < 0) {
+	   		
+	   			//Turns negative numbers into positives when checking for factors, if input < 0.
 	   			fixedInput = -input;
 	   		}
 
 	   		for(int i=1; i<= fixedInput; i++) {
 
+	   			//If input is divisible by a number (i), then it is added to factorSum.
 	   			if(fixedInput % i == 0) {
 
 	   				factorSum += i;
 	   			}
 	   		}
 
-	   		if(factorSum > (input * 2))
-	   		{
+	   		if(factorSum > (input * 2)) {
 	   			return true;
 	   		}
+
 	   		return false;
 	    }
 	 
@@ -57,25 +54,26 @@ public class NumberProcessor {
 	         	int exponentTwo = 0;
 	         	int powerResult = 0;
 
-	         	while(exponentTwo < num)
-	         	{
+	         	while(exponentTwo < num) {
+
 	         		exponentOne = (int) Math.pow(i, j);
 	         		exponentTwo = (int) Math.pow(j, i);
 
-	         		if((powerResult = exponentOne + exponentTwo) == num)
-	         		{
+	         		if((powerResult = exponentOne + exponentTwo) == num) {
+	    
 	         			return true;
 	         		}
-	         		else if((powerResult > num) || (exponentOne  > num))
-	         		{
+	         		else if((powerResult > num) || (exponentOne  > num)) {
+
 	         			i = 2;
 	         			++j;
 	         		}
-	         		else
-	         		{
+	         		else {
+	         			
 	         			++i;
 	         		}
 	         	}
+
 	         	return false;   
 	    }
 
@@ -92,13 +90,9 @@ public class NumberProcessor {
 	  
 	   public static boolean isSquad(long num) {
 
-	   		String factorOne = "";
-	   		String factorTwo = "";
-
 	   		String numStr = Long.toString(num);
 
-	   		if(numStr.length() % 2 != 0)
-	   		{
+	   		if(numStr.length() % 2 != 0) {
 	   			return false;
 	   		}
 
@@ -108,34 +102,34 @@ public class NumberProcessor {
 	   		int product = 0;
 
 	   		outerLoop:
-	   		for(int i = start; i < end; i++)
-	   		{
-	   			for(int j = i; j < end; j++)
-	   			{
+	   		for(int i = start; i < end; i++) {
+	   
+	   			for(int j = i; j < end; j++) {
+
 	   				product = i * j;
 
-	   				if(product == num)
-	   				{
-	   					factorOne = Long.toString(i);
-	   					factorTwo = Long.toString(j);
+	   				if(product == num) {
 
-	   					if((factorOne.charAt(factorOne.length() - 1) == '0') && (factorTwo.charAt(factorTwo.length() - 1) == '0'))
-	   					{
+	   					String factorOne = Long.toString(i);
+	   					String factorTwo = Long.toString(j);
+
+	   					if((factorOne.charAt(factorOne.length() - 1) == '0') && (factorTwo.charAt(factorTwo.length() - 1) == '0')) {
+	   					
 	   						continue outerLoop;
 	   					}
 
-	   					for(int k=0; k< factorOne.length(); k++)
-	   					{
-	   						if((!numStr.contains("" + factorOne.charAt(k))) || (!numStr.contains("" + factorTwo.charAt(k))))
-	   						{
+	   					for(int k=0; k< factorOne.length(); k++) {
+	   					
+	   						if((!numStr.contains("" + factorOne.charAt(k))) || (!numStr.contains("" + factorTwo.charAt(k)))) {
+	   						
 	   							continue outerLoop;
 	   						}
 	   					}
 	   					return true;
 	   				}
 
-	   				else if(product > num)
-	   				{
+	   				else if(product > num) {
+	   				
 	   					continue outerLoop;
 	   				}
 	   			}
@@ -171,23 +165,22 @@ public class NumberProcessor {
 	   }
 	   */
 
-	   public static int maSequence(int num){
+	   public static int maSequence(int num) {
 	     // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
 
-	  		if(num <= 0)
-	   		{
+	  		if(num <= 0) {
+	   		
 	   			return 0;
 	   		}
 
 	  		int nth = 1;
 
-	  		for(int i = 1; i < num; i++)
-	  		{
+	  		for(int i = 1; i < num; i++) {
+	  		
 	  			nth += (5 * i) - (i - 1);
 	  		}
 
 	  		return nth;
-
 	    }
 	         
 	  /** 
@@ -202,9 +195,14 @@ public class NumberProcessor {
 
 	   public static boolean isOneSummative(long num) {
 
-	   		if(num <= 0)
-	   		{
+	   		if(num <= 0) {
+	   		
 	   			return false;
+	   		}
+
+	   		if(num == 1) {
+
+	   			return true;
 	   		}
 
 	   		int index = 0;
@@ -216,37 +214,38 @@ public class NumberProcessor {
 	   		long newNum = 0;
 	   		String strNum = Long.toString(num);
 
-	   		while(newNum != 1)
-	   		{
+	   		do {
+	   		
 	   			newNum = 0;
 
-	   			for(int i=0; i< strNum.length(); i++)
-	   			{
+	   			for(int i=0; i< strNum.length(); i++) {
+	   			
 	   				newNum += (long) Math.pow(Long.parseLong(strNum.substring(i, i + 1)), 2);
 	   			}
 
-	   			if(newNum == 1)
-	   			{
+	   			if(newNum == 1) {
+	   			
 	   				return true;
 	   			}
 
 	   			sb.append(newNum + "-");
 	   			s = sb.toString();
 
-	   			while((index = s.indexOf(Long.toString(newNum) + "-")) != -1)
-	   			{
+	   			while((index = s.indexOf(Long.toString(newNum) + "-")) != -1) {
+
 	   				++foundOccurrences;
 	   				s = s.substring(index + Long.toString(newNum).length());
 	   			}
 
-	   			if(foundOccurrences >= 2)
-	   			{
+	   			if(foundOccurrences >= 2) {
+	   			
 	   				return false;
 	   			}
 
 	   			foundOccurrences = 0;
 	   			strNum = Long.toString(newNum);
 	   		}
+	   		while(newNum != 1);
 
 	   		return true;
 	   }
@@ -268,13 +267,13 @@ public class NumberProcessor {
 
 	   		int len = array.length;
 
-	   		if(len == 1)
-	   		{
+	   		if(len == 1) {
+	   		
 	   			return true;
 	   		}
 
-	   		if(len < 3)
-	   		{
+	   		if(len < 3) {
+	   		
 	   			return false;
 	   		}
 
@@ -284,10 +283,10 @@ public class NumberProcessor {
 	   		int upperIndex = 2;
 	   		int currentSum = 0;
 
-	   		while(currentPos != len)
-	   		{
-	   			if(currentPos > len)
-	   			{
+	   		while(currentPos != len) {
+	   		
+	   			if(currentPos > len) {
+	   			
 	   				return false;
 	   			}
 
@@ -297,16 +296,17 @@ public class NumberProcessor {
 	   		
 	   		offset = 2;
 
-	   		for(int i = 1; i < len; i++)
-	   		{
+	   		for(int i = 1; i < len; i++) {
+
 	   			currentSum += array[i];
 
-	   			if(i == upperIndex)
-	   			{
-	   				if(currentSum != initialSum)
-	   				{
+	   			if(i == upperIndex) {
+	   			
+	   				if(currentSum != initialSum) {
+	   				
 	   					return false;
 	   				}
+
 	   				currentSum = 0;
 	   				++offset;
 	   				upperIndex += offset;
@@ -333,18 +333,18 @@ public class NumberProcessor {
 	  public static int[] incrementalArray(int n) {
 	     // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
 
-	        if(n <= 0)
-	        {
+	        if(n <= 0) {
+	        
 	        	return null;
 	        }
 
-	        if(n == 1)
-	        {
+	        if(n == 1) {
+	        
 	        	return new int[] {1};
 	        }
 
-	        if(n == 2)
-	        {
+	        if(n == 2) {
+	        
 	        	return new int[] {1, 1, 2};
 	        }
 
@@ -354,8 +354,8 @@ public class NumberProcessor {
 	        int maxNumber = 3;
 	        int [] arr;
 
-	        for(int i = 1; i <= n; i++)
-	        {
+	        for(int i = 1; i <= n; i++) {
+	        
 	        	arrSize += i;
 	        }
 
@@ -364,16 +364,17 @@ public class NumberProcessor {
 	        arr[1] = 1;
 	        arr[2] = 2;
 
-	        for(int j = 3; j < arrSize; j++)
-	        {
-	        	if(currentNumber > maxNumber)
-	        	{
+	        for(int j = 3; j < arrSize; j++) {
+	        
+	        	if(currentNumber > maxNumber) {
+	        	
 	        		currentNumber = 1;
 	        		arr[j] = currentNumber;
 	        		++currentNumber;
 	        		++maxNumber;
 	        		continue;
 	        	}
+
 	        	arr[j] = currentNumber;
 	        	++currentNumber;
 	        }
@@ -398,18 +399,19 @@ public class NumberProcessor {
 	   		
 	   		int sum = 0;
 
-	   		for(int i = 0; i < array.length; i++)
-	   		{
+	   		for(int i = 0; i < array.length; i++) {
+	   		
 	   			sum += Integer.parseInt(array[i]);
 	   		}
 
 	   		return sum;
 	   }
+
 	   public static boolean isDivisible(int array []) {
 	     // DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
 	        
-	        if(array.length == 0)
-	        {
+	        if(array.length == 0) {
+	        
 	        	return false;
 	        }
 
@@ -419,42 +421,42 @@ public class NumberProcessor {
 	        String[] firstSubSet;
 	        String[] secondSubSet;
 
-	        for(int i = 0; i < array.length; i++)
-	        {
-	        	if(i != 0)
-	        	{
+	        for(int i = 0; i < array.length; i++) {
+	        
+	        	if(i != 0) {
+	        	
 	        		firstSubArray.append(",");
 	        	}
+
 	        	firstSubArray.append(array[i]);
 
-	        	for(int j = i + 1; j < array.length; j++)
-	        	{
-	        		if(j != i + 1)
-	        		{
+	        	for(int j = i + 1; j < array.length; j++) {
+	        	
+	        		if(j != i + 1) {
+	        		
 	        			secondSubArray.append(",");
 	        		}
+
 	        		secondSubArray.append(array[j]);
 	        	}
 
-	        	if((secondSubArray.toString().length() == 0) || (firstSubArray.toString().length() == 0))
-	        	{
+	        	if((secondSubArray.toString().length() == 0) || (firstSubArray.toString().length() == 0)) {
+	      
 	        		return false;
 	        	}
 
 	        	firstSubSet = firstSubArray.toString().split(",", array.length);
-	        	//System.out.println(Arrays.toString(firstSubSet));
 	        	secondSubSet = secondSubArray.toString().split(",", array.length);
-	        	//System.out.println(Arrays.toString(secondSubSet));
 
-	        	if(calculateSum(firstSubSet) == calculateSum(secondSubSet))
-	        	{
+	        	if(calculateSum(firstSubSet) == calculateSum(secondSubSet)) {
+	        	
 	        		return true;
 	        	}
+
 	        	secondSubArray.setLength(0);
 	        }
 
 	        return false;
-
 	    }
 	
 	   
@@ -467,26 +469,26 @@ public class NumberProcessor {
 
      public static boolean isConsecutiveDual(int[] array) {
 
-     		if(array.length < 2)
-     		{
+     		if(array.length < 2) {
+     		
      			return false;
      		}
 
      		int prevNumber = array[0];
 
-     		for(int i = 1; i < array.length; i++)
-     		{
-     			if(prevNumber == array[i])
-     			{
+     		for(int i = 1; i < array.length; i++) {
+     		
+     			if(prevNumber == array[i]) {
+     			
      				return true;
      			}
-     			else
-     			{
+     			else {
+     			
      				prevNumber = array[i];
      			}
      		}
-     		return false;
 
+     		return false;
           }
 
 
@@ -508,19 +510,20 @@ public class NumberProcessor {
            	int secondNum = 0;
            	int numOfPairs = 0;
 
-            for(int i = 0; i < array.length; i++)
-            {
+            for(int i = 0; i < array.length; i++) {
+            
             	firstNum = array[i];
-            	for(int j = 0; j < array.length; j++)
-            	{
-            		if(j == i)
-            		{
+            	for(int j = 0; j < array.length; j++) {
+            	
+            		if(j == i) {
+            		
             			continue;
             		}
+
             		secondNum = array[j];
 
-            		if((firstNum + secondNum) == 10)
-            		{
+            		if((firstNum + secondNum) == 10) {
+            		
             			++numOfPairs;
             		}
             	}
@@ -552,17 +555,18 @@ public class NumberProcessor {
      	int currentSum = 0;
      	int maxSum = 0;
 
-     	for(int i = 0; i < array.length; i++) 
-     	{
-     		for(int j = i; j < array.length; j++)
-     		{
+     	for(int i = 0; i < array.length; i++) {
+     	
+     		for(int j = i; j < array.length; j++) {
+     		
      			currentSum += array[j];
 
-     			if(currentSum > maxSum)
-     			{
+     			if(currentSum > maxSum) {
+     			
      				maxSum = currentSum;
      			}
      		}
+
      		currentSum = 0;
      	}
         
@@ -581,8 +585,8 @@ public class NumberProcessor {
 	public static int[] maxSubArray(int array[]) {
 		// DELETE THE LINE BELOW ONCE YOU IMPLEMENT THE CALL!
 
-		if(array.length == 0)
-		{
+		if(array.length == 0) {
+		
 			return new int[]{};
 		}
 
@@ -593,37 +597,39 @@ public class NumberProcessor {
      	String[] tempArr = null;
      	int[] maxArr;
 
-     	for(int i = 0; i < array.length; i++) 
-     	{
-     		for(int j = i; j < array.length; j++)
-     		{
-     			if(j != i)
-     			{
+     	for(int i = 0; i < array.length; i++) {
+     	
+     		for(int j = i; j < array.length; j++) {
+     		
+     			if(j != i) {
+     			
      				subArray.append(",");
      			}
+
      			subArray.append(array[j]);
 
      			currentSum += array[j];
 
-     			if(currentSum > maxSum)
-     			{
+     			if(currentSum > maxSum) {
+     			
      				maxSum = currentSum;
      				tempArr = subArray.toString().split(",", array.length);
      			}
      		}
+
      		currentSum = 0;
      		subArray.setLength(0);
      	}
 
-     	if(tempArr == null)
-     	{
+     	if(tempArr == null) {
+     	
      		return new int[] {};
      	}
 
      	maxArr = new int[tempArr.length];
 
-     	for(int k = 0; k < tempArr.length; k++)
-     	{
+     	for(int k = 0; k < tempArr.length; k++) {
+     	
      		maxArr[k] = Integer.parseInt(tempArr[k]);
      	}
 
@@ -634,17 +640,16 @@ public class NumberProcessor {
     public static void main(String argv[]) {
 
     	
-    	/*
+    	
     	Scanner sc = new Scanner(System.in);
     	int input = 0;
 
-    	while(true)
-    	{
+    	if(input == 0) {
+    	
     		System.out.println("<<<Please enter in an integer.");
     		input = sc.nextInt();
     		System.out.println(isOneSummative(input));
     	}
-    	*/
 
     	//isExcessive test cases
 
