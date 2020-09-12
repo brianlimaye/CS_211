@@ -1,5 +1,13 @@
 public class NumberProcessor {
 
+    /*
+     * Name: Brian Limaye
+     * UserID: blimaye 
+     * G#: G01260841
+     * Sections: 211
+     * 
+     */
+
     /**
      * This method returns true if its integer argument is "Excessive", otherwise it returns false
      * A number is defined to be "Excessive" if the sum of its positive divisors is greater than 2 times the number itself.
@@ -600,8 +608,8 @@ public class NumberProcessor {
 
         //isExcessive test cases
 
-        //assert (!isExcessive(-1));
-        //assert (!isExcessive(0));
+        assert (isExcessive(-1));
+        assert (!isExcessive(0));
         assert (!isExcessive(11));
         assert (isExcessive(24));
         assert (!isExcessive(33));
