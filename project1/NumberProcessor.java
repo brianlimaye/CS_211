@@ -25,11 +25,7 @@ public class NumberProcessor {
             }
         }
 
-        if (factorSum > (input * 2)) {
-            return true;
-        }
-
-        return false;
+        return factorSum > (input * 2);
     }
 
 
@@ -204,7 +200,8 @@ public class NumberProcessor {
                 break;
             }
 
-            sb.append(newNum + "-");
+            sb.append(newNum);
+            sb.append("-");
             String s = sb.toString();
 
             while ((index = s.indexOf(Long.toString(newNum) + "-")) != -1) {
@@ -361,9 +358,9 @@ public class NumberProcessor {
 
         int sum = 0;
 
-        for (int i = 0; i < array.length; i++) {
+        for (String s : array) {
 
-            sum += Integer.parseInt(array[i]);
+            sum += Integer.parseInt(s);
         }
 
         return sum;
@@ -581,44 +578,61 @@ public class NumberProcessor {
 
     }
 
+    protected static boolean equals(int[] first, int[] second) {
+        if (first==second)
+            return true;
+        if (first==null || second==null)
+            return false;
+
+        final int length = first.length;
+        if (second.length != length)
+            return false;
+
+        for (int i=0; i<length; i++)
+            if (first[i] != second[i])
+                return false;
+
+        return true;
+    }
+
     public static void main(String argv[]) {
 
 
         //isExcessive test cases
 
-        assert (isExcessive(-1) == false);
-        assert (isExcessive(0) == false);
-        assert (isExcessive(11) == false);
-        assert (isExcessive(24) == true);
-        assert (isExcessive(33) == false);
-        assert (isExcessive(44) == false);
-        assert (isExcessive(56) == true);
-        assert (isExcessive(66) == true);
-        assert (isExcessive(95) == false);
-        assert (isExcessive(101) == false);
-        assert (isExcessive(102) == true);
-        assert (isExcessive(945) == true);
+        //assert (!isExcessive(-1));
+        //assert (!isExcessive(0));
+        assert (!isExcessive(11));
+        assert (isExcessive(24));
+        assert (!isExcessive(33));
+        assert (!isExcessive(44));
+        assert (isExcessive(56));
+        assert (isExcessive(66));
+        assert (!isExcessive(95));
+        assert (!isExcessive(101));
+        assert (isExcessive(102));
+        assert (isExcessive(945));
 
         //isPower test cases
-        assert (isPower(6) == false);
-        assert (isPower(8) == true);
-        assert (isPower(10) == false);
-        assert (isPower(17) == true);
-        assert (isPower(34) == false);
-        assert (isPower(100) == true);
-        assert (isPower(150) == false);
-        assert (isPower(593) == true);
-        assert (isPower(1125) == false);
+        assert (!isPower(6));
+        assert (isPower(8));
+        assert (!isPower(10));
+        assert (isPower(17));
+        assert (!isPower(34));
+        assert (isPower(100));
+        assert (!isPower(150));
+        assert (isPower(593));
+        assert (!isPower(1125));
 
         //isSquad test cases
 
-        assert (isSquad(1530) == true);
-        assert (isSquad(109) == false);
-        assert (isSquad(1002) == false);
-        assert (isSquad(1395) == true);
-        assert (isSquad(2187) == true);
-        assert (isSquad(126000) == false);
-        assert (isSquad(150300) == true);
+        assert (isSquad(1530));
+        assert (!isSquad(109));
+        assert (!isSquad(1002));
+        assert (isSquad(1395));
+        assert (isSquad(2187));
+        assert (!isSquad(126000));
+        assert (isSquad(150300));
 
         //maSequence(10);
 
@@ -632,47 +646,46 @@ public class NumberProcessor {
         assert (maSequence(6) == 66);
         assert (maSequence(7) == 91);
 
-        assert (isOneSummative(7) == true);
-        assert (isOneSummative(5) == false);
-        assert (isOneSummative(392) == true);
+        assert (isOneSummative(7));
+        assert (!isOneSummative(5));
+        assert (isOneSummative(392));
 
 
-        assert (isEvenDual(new int[]{6, 2, 4, 2, 2, 2, 1, 5, 0, 0}) == true);
-        assert (isEvenDual(new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, -2, -1}) == true);
-        assert (isEvenDual(new int[]{2, 1, 2, 3, 5, 6}) == false);
-        assert (isEvenDual(new int[]{}) == false);
-        assert (isEvenDual(new int[]{0, 0}) == false);
-        assert (isEvenDual(new int[]{1, 0, 1, 0, 1, 0, 1, 0}) == false);
+        assert (isEvenDual(new int[]{6, 2, 4, 2, 2, 2, 1, 5, 0, 0}));
+        assert (isEvenDual(new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, -2, -1}));
+        assert (!isEvenDual(new int[]{2, 1, 2, 3, 5, 6}));
+        assert (!isEvenDual(new int[]{}));
+        assert (!isEvenDual(new int[]{0, 0}));
+        assert (!isEvenDual(new int[]{1, 0, 1, 0, 1, 0, 1, 0}));
 
-        //System.out.println(java.util.Arrays.equals(incrementalArray(1), new int[]{1}));
-        //System.out.println(java.util.Arrays.equals(incrementalArray(2), new int[]{1, 1, 2}));
-        //System.out.println(java.util.Arrays.equals(incrementalArray(4), new int[]{1, 1, 2, 1, 2, 3, 1, 2, 3, 4}));
-        //System.out.println(java.util.Arrays.equals(incrementalArray(6), new int[]{1, 1, 2, 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 6}));
+        assert(equals(incrementalArray(1), new int[]{1}));
+        assert(equals(incrementalArray(2), new int[]{1, 1, 2}));
+        assert(equals(incrementalArray(4), new int[]{1, 1, 2, 1, 2, 3, 1, 2, 3, 4}));
+        assert(equals(incrementalArray(6), new int[]{1, 1, 2, 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 6}));
 
-        assert (isDivisible(new int[]{6, 2, 4, 2, 2, 2, 1, 5, 0, 0}) == true);
-        assert (isDivisible(new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, -2, -1}) == true);
-        assert (isDivisible(new int[]{2, 1, 2, 3, 5, 6}) == false);
-        assert (isDivisible(new int[]{}) == false);
-        assert (isDivisible(new int[]{0, 0}) == true);
-        assert (isDivisible(new int[]{1, 0, 1, 0, 1, 0, 0, 0}) == false);
+        assert (isDivisible(new int[]{6, 2, 4, 2, 2, 2, 1, 5, 0, 0}));
+        assert (isDivisible(new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, -2, -1}));
+        assert (!isDivisible(new int[]{2, 1, 2, 3, 5, 6}));
+        assert (!isDivisible(new int[]{}));
+        assert (isDivisible(new int[]{0, 0}));
+        assert (!isDivisible(new int[]{1, 0, 1, 0, 1, 0, 0, 0}));
 
 
-        assert (isConsecutiveDual(new int[]{1, 2, 3, 3, 4, 5}) == true);
-        assert (isConsecutiveDual(new int[]{4, 4, 4, 4, 4}) == true);
-        assert (isConsecutiveDual(new int[]{10, 9, 8, 7, 8, 9}) == false);
-        assert (isConsecutiveDual(new int[]{0, 1, 0, 1, 0, 1}) == false);
+        assert (isConsecutiveDual(new int[]{1, 2, 3, 3, 4, 5}));
+        assert (isConsecutiveDual(new int[]{4, 4, 4, 4, 4}));
+        assert (!isConsecutiveDual(new int[]{10, 9, 8, 7, 8, 9}));
+        assert (!isConsecutiveDual(new int[]{0, 1, 0, 1, 0, 1}));
 
-        assert (isPairArray(new int[]{4, 10, 14, 0}) == true);
-        assert (isPairArray(new int[]{10, 3, 0, 15, 7}) == false);
-        assert (isPairArray(new int[]{4, 1, 11}) == false);
+        assert (isPairArray(new int[]{4, 10, 14, 0}));
+        assert (!isPairArray(new int[]{10, 3, 0, 15, 7}));
+        assert (!isPairArray(new int[]{4, 1, 11}));
 
         assert (maxSum(new int[]{1, -3, 4, -2, -1, 6}) == 7);
         assert (maxSum(new int[]{-1, -3, 4, -1, -1, 2, 6, -4}) == 10);
         assert (maxSum(new int[]{-5, -7, -8, -4, -3, -2}) == 0);
 
-        //System.out.println(java.util.Arrays.equals(maxSubArray(new int[]{1, -3, 4, -2, -1, 6}), new int[]{4, -2, -1, 6}));
-        //System.out.println(java.util.Arrays.equals(maxSubArray(new int[]{-1, -3, 4, -1, -1, 2, 6, -4}), new int[]{4, -1, -1, 2, 6}));
-        //System.out.println(java.util.Arrays.equals(maxSubArray(new int[]{-5, -7, -8, -4, -3, -2}), new int[]{}));
-
+        assert(equals(maxSubArray(new int[]{1, -3, 4, -2, -1, 6}), new int[]{4, -2, -1, 6}));
+        assert(equals(maxSubArray(new int[]{-1, -3, 4, -1, -1, 2, 6, -4}), new int[]{4, -1, -1, 2, 6}));
+        assert(equals(maxSubArray(new int[]{-5, -7, -8, -4, -3, -2}), new int[]{}));
     }
 }
