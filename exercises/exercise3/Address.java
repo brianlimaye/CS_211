@@ -6,15 +6,24 @@ public class Address {
     private String state;
 
     public Address() {
-        this(null, 0, null, null);
+
+        this.streetNumber = null;
+        this.zipCode = 0;
+        this.city = null;
+        this.state = null;
     }
 
-    public Address(final String streetNumber, final int zipCode, final String city, final String state) {
+    public Address(String streetNumber, int zipCode, String city, String state) {
 
         this.streetNumber = streetNumber;
         this.zipCode = zipCode;
         this.city = city;
         this.state = state;
+    }
+
+    public boolean equals(Address a) {
+
+        return this.toString().equalsIgnoreCase(a.toString());
     }
 
     public String getStreetNumber() {
@@ -22,19 +31,9 @@ public class Address {
         return streetNumber;
     }
 
-    public void setStreetNumber(final String streetNumber) {
-
-        this.streetNumber = streetNumber;
-    }
-
     public int getZipCode() {
 
         return zipCode;
-    }
-
-    public void setZipCode(final int zipCode) {
-
-        this.zipCode = zipCode;
     }
 
     public String getCity() {
@@ -42,45 +41,38 @@ public class Address {
         return city;
     }
 
-    public void setCity(final String city) {
-
-        this.city = city;
-    }
-
     public String getState() {
 
         return state;
     }
 
-    public void setState(final String state) {
+    public void setStreetNumber(String streetNumber) {
+
+        this.streetNumber = streetNumber;
+    }
+
+    public void setZipCode(int zipCode) {
+
+        this.zipCode = zipCode;
+    }
+
+    public void setCity(String city) {
+
+        this.city = city;
+    }
+
+    public void setState(String state) {
 
         this.state = state;
     }
 
     public String toString() {
-        final StringBuilder builder = new StringBuilder("Address: ");
-        builder.append(streetNumber);
-        builder.append(",");
-        builder.append(" ");
-        builder.append(zipCode);
-        builder.append(",");
-        builder.append(" ");
-        builder.append(city);
-        builder.append(",");
-        builder.append(" ");
-        builder.append(state);
-        return builder.toString();
+
+        return ("Address: " + streetNumber + ", " + zipCode + ", " + city + ", " + state);
     }
 
-    public boolean equals(final Address otherAddress) {
-        if (otherAddress == null) {
-            return false;
-        }
-        return this.toString().equalsIgnoreCase(otherAddress.toString());
-    }
+    public static void main(String[] args) {
 
-    public int hashCode()
-    {
-        return toString().hashCode();
+
     }
 }
