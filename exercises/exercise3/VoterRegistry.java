@@ -54,10 +54,10 @@ public class VoterRegistry {
     }
 
     public boolean isEmpty() {
-        int nullCount = 0;
         if (voters == null) {
             return false;
         }
+        int nullCount = 0;
         for (Voter v : voters) {
             if (v == null) {
                 ++nullCount;
@@ -67,10 +67,10 @@ public class VoterRegistry {
     }
 
     public boolean isFull() {
-        int voterCount = 0;
         if (voters == null) {
             return false;
         }
+        int voterCount = 0;
         for (Voter v : voters) {
             if (v != null) {
                 ++voterCount;
@@ -79,13 +79,17 @@ public class VoterRegistry {
         return voterCount == voters.length;
     }
 
-    private void fillVoters(Voter[] newVoters) {
+    private void fillVoters(final Voter[] newVoters) {
         for (int i = 0; i < voters.length; i++) {
             newVoters[i] = voters[i];
         }
     }
 
     public void addVoter(Voter newVoter) {
+        if (newVoter == null)
+        {
+            throw new IllegalArgumentException("Voter must not be null!");
+        }
         if ((voters == null) || (newVoter.getBirthDate().plusYears(18).isAfter(LocalDate.now()))) {
             return;
         }
@@ -166,7 +170,6 @@ public class VoterRegistry {
 
     public void doubleSize() {
         if (isFull()) {
-
             Voter[] newVoters = new Voter[voters.length * 2];
             fillVoters(voters);
             this.voters = newVoters;
