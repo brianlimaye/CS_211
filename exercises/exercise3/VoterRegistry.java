@@ -15,36 +15,6 @@ public class VoterRegistry {
         this.voters = new Voter[capacity];
     }
 
-    public static void main(String[] args) {
-        VoterRegistry vr = new VoterRegistry(10);
-        vr.addVoter(new Voter("112", "Brian", "Limaye", LocalDate.of(2002, 3, 16), "Male", new Address("734 Bonnie", 20176, "Leesburg", "Virginia"), 1l));
-        vr.addVoter(new Voter("453", "John", "Heldon", LocalDate.of(1995, 4, 30), "Male", new Address("567 Hillbrook Terrace", 20176, "Anchorage", "Alaska"), 5l));
-
-        long startTime = System.currentTimeMillis();
-
-        vr.deleteVoter(new Voter("112", "Brian", "Limaye", LocalDate.of(2002, 3, 16), "Male", new Address("734 Bonnie", 20176, "Leesburg", "Virginia"), 1l));
-
-        final Voter[] voterData = vr.getVoterData();
-        for (int i = 0; i < voterData.length; i++) {
-            System.out.println(voterData[i]);
-        }
-
-        long endTime = System.currentTimeMillis();
-
-        System.out.println("deleteVoter() executed in about: " + (endTime - startTime) + " milliseconds!");
-
-        vr.addVoter(new Voter("112", "Brian", "Limaye", LocalDate.of(2002, 3, 16), "Male", new Address("734 Bonnie", 20176, "Leesburg", "Virginia"), 1l));
-
-        startTime = System.currentTimeMillis();
-
-        vr.deleteVoter2(new Voter("112", "Brian", "Limaye", LocalDate.of(2002, 3, 16), "Male", new Address("734 Bonnie", 20176, "Leesburg", "Virginia"), 1l));
-        System.out.println(vr.getVoterData());
-
-        endTime = System.currentTimeMillis();
-
-        System.out.println("deleteVoter2() executed in about: " + (endTime - startTime) + " milliseconds!");
-    }
-
     public int getCapacity() {
         return voters.length;
     }
@@ -54,22 +24,16 @@ public class VoterRegistry {
     }
 
     public boolean isEmpty() {
-        if (voters == null) {
-            return false;
-        }
-        int nullCount = 0;
         for (Voter v : voters) {
-            if (v == null) {
-                ++nullCount;
-            }
+           if (v != null)
+           {
+               return false;
+           }
         }
-        return nullCount == voters.length;
+        return true;
     }
 
     public boolean isFull() {
-        if (voters == null) {
-            return false;
-        }
         int voterCount = 0;
         for (Voter v : voters) {
             if (v != null) {
@@ -85,12 +49,19 @@ public class VoterRegistry {
         }
     }
 
-    public void addVoter(Voter newVoter) {
+    public void addVoter(final Voter newVoter) {
         if (newVoter == null)
         {
             throw new IllegalArgumentException("Voter must not be null!");
         }
-        if ((voters == null) || (newVoter.getBirthDate().plusYears(18).isAfter(LocalDate.now()))) {
+        final LocalDate newVoterBirthDate = newVoter.getBirthDate();
+        if (newVoterBirthDate == null)
+        {
+            // TODO:  determine if an exception should be thrown instead or have a return code
+            return;
+        }
+        if (newVoterBirthDate.plusYears(18).isAfter(LocalDate.now())) {
+            // TODO:  determine if an exception should be thrown instead or have a return code
             return;
         }
         if (isFull()) {
@@ -108,11 +79,11 @@ public class VoterRegistry {
         }
     }
 
-    public Voter deleteVoter(Voter voter) {
+    public Voter deleteVoter(final Voter voter) {
         boolean reachedDeleted = false;
         Voter deletedVoter = null;
 
-        if ((voters == null) || (voter == null) || (isEmpty())) {
+        if ((voter == null) || (isEmpty())) {
             return null;
         }
         for (int i = 0; i < voters.length; i++) {
@@ -132,13 +103,13 @@ public class VoterRegistry {
         return deletedVoter;
     }
 
-    public Voter deleteVoter2(Voter voter) {
+    public Voter deleteVoter2(final Voter voter) {
         int removedIndex = 0;
         boolean isRemoved = false;
         Voter deletedVoter = null;
         Voter[] newVoters;
 
-        if ((voters == null) || (voter == null) || (isEmpty())) {
+        if ((voter == null) || (isEmpty())) {
             return null;
         }
 
@@ -170,7 +141,7 @@ public class VoterRegistry {
 
     public void doubleSize() {
         if (isFull()) {
-            Voter[] newVoters = new Voter[voters.length * 2];
+            final Voter[] newVoters = new Voter[voters.length * 2];
             fillVoters(voters);
             this.voters = newVoters;
         }
@@ -178,14 +149,41 @@ public class VoterRegistry {
 
     public int getNumberOfRegisteredVoters() {
         int numOfVoters = 0;
-
         for (Voter v : voters) {
-
             if (v != null) {
-
                 ++numOfVoters;
             }
         }
         return numOfVoters;
+    }
+
+    public static void main(String[] args) {
+        VoterRegistry vr = new VoterRegistry(10);
+        vr.addVoter(new Voter("112", "Brian", "Limaye", LocalDate.of(2002, 3, 16), "Male", new Address("734 Bonnie", 20176, "Leesburg", "Virginia"), 1l));
+        vr.addVoter(new Voter("453", "John", "Heldon", LocalDate.of(1995, 4, 30), "Male", new Address("567 Hillbrook Terrace", 20176, "Anchorage", "Alaska"), 5l));
+
+        long startTime = System.currentTimeMillis();
+
+        vr.deleteVoter(new Voter("112", "Brian", "Limaye", LocalDate.of(2002, 3, 16), "Male", new Address("734 Bonnie", 20176, "Leesburg", "Virginia"), 1l));
+
+        final Voter[] voterData = vr.getVoterData();
+        for (int i = 0; i < voterData.length; i++) {
+            System.out.println(voterData[i]);
+        }
+
+        long endTime = System.currentTimeMillis();
+
+        System.out.println("deleteVoter() executed in about: " + (endTime - startTime) + " milliseconds!");
+
+        vr.addVoter(new Voter("112", "Brian", "Limaye", LocalDate.of(2002, 3, 16), "Male", new Address("734 Bonnie", 20176, "Leesburg", "Virginia"), 1l));
+
+        startTime = System.currentTimeMillis();
+
+        vr.deleteVoter2(new Voter("112", "Brian", "Limaye", LocalDate.of(2002, 3, 16), "Male", new Address("734 Bonnie", 20176, "Leesburg", "Virginia"), 1l));
+        System.out.println(vr.getVoterData());
+
+        endTime = System.currentTimeMillis();
+
+        System.out.println("deleteVoter2() executed in about: " + (endTime - startTime) + " milliseconds!");
     }
 }
