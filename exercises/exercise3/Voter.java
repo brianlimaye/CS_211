@@ -124,7 +124,7 @@ public class Voter {
         builder.append(lastName);
         builder.append(",");
         builder.append(" ");
-        builder.append(dateOfBirth);
+        builder.append(dateOfBirth.toString());
         builder.append(",");
         builder.append(" ");
         builder.append(gender);
