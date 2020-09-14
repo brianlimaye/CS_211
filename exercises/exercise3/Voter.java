@@ -141,7 +141,7 @@ public class Voter {
         if (voter == null) {
             return false;
         }
-        return (voter.toString().equals(toString()));
+        return (voter.toString().equalsIgnoreCase(toString()));
     }
 
     public int hashCode()
