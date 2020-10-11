@@ -36,7 +36,7 @@ public class Analytics {
 			++numOfIncomes;
 		}
 
-		if(numOfIncomes == 0.0) {
+		if(numOfIncomes == 0) {
 
 			return 0.0;
 		}
