@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Person {
 
 	private static int currentID;
-	private int id;
+	private final int id;
 	private String name;
 	private String birthday;
 	private String ssn;
@@ -11,8 +11,7 @@ public class Person {
 
 	public Person() {
 
-		++currentID;
-		this.id = currentID;
+		this.id = ++currentID;
 	}
 
 	public boolean setName(String newName) {
@@ -130,11 +129,6 @@ public class Person {
 	}
 
 	public String toString() {
-
-		if((birthday == null) || (ssn == null)) {
-
-			return null;
-		}
 
 		StringBuilder sb = new StringBuilder();
 
