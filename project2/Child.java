@@ -1,4 +1,11 @@
 
+/**
+*This class represents and stores properties of a Child
+*@author Brian Limaye
+*@version 1.0
+*@since 1.0 
+*/
+
 public class Child extends Person {
 	
 	private String school;
