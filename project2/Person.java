@@ -47,7 +47,6 @@ public class Person {
 		}
 
 		String[] tokens = newBirthday.split("/", 3);
-		int[] digits = new int[3];
 
 		if((tokens == null) || (tokens.length != 3)) {
 
@@ -64,7 +63,6 @@ public class Person {
 			try {
 
 				int currToken = Integer.parseInt(tokens[i]);
-				digits[i] = currToken;
 			}
 			catch(NumberFormatException nfe) {
 
@@ -84,7 +82,6 @@ public class Person {
 		}
 
 		String[] tokens = newSSN.split("-", 3);
-		int[] intTokens = new int[3];
 
 		if((tokens == null) || (tokens.length != 3)) {
 
@@ -100,7 +97,7 @@ public class Person {
 
 			try {
 
-				intTokens[i] = Integer.parseInt(tokens[i]);
+				Integer.parseInt(tokens[i]);
 			}
 			catch(NumberFormatException nfe) {
 
@@ -141,11 +138,24 @@ public class Person {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(name);
+		if(name != null) {
+
+			sb.append(name);
+		}
+
 		sb.append(" ");
 		sb.append("xxx-xx-");
-		sb.append(ssn.substring(ssn.length() - 4) + " ");
-		sb.append(birthday.substring(0, 4) + "/**/**");
+		
+
+		if(ssn != null) {
+
+			sb.append(ssn.substring(ssn.length() - 4) + " ");
+		}
+		
+		if(birthday != null) {
+
+			sb.append(birthday.substring(0, 4) + "/**/**");
+		}
 
 		return sb.toString();
 	}

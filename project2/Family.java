@@ -1,12 +1,13 @@
 
 public class Family {
 
-	private int numMembers;
-	private int filingStatus;
-	private Person[] people;
+	private final  int numMembers;
+	private final int filingStatus;
+	private final Person[] people;
 
 	public Family(int members, int filingStatus) {
 
+		this.numMembers = members;
 		people = new Person[members];
 		this.filingStatus = filingStatus;
 	}
@@ -146,7 +147,6 @@ public class Family {
 		float totalTax = 0f;
 		float currentRate = 0f;
 		float taxCredit = 0f;
-		float taxableIncome = this.getTaxableIncome();
 		int maxBracket = Taxation.maxIncomeTaxBracket(this);
 
 		for(int i = 1; i <= maxBracket; i++) {

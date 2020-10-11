@@ -23,7 +23,6 @@ public class TaxYear {
 
 		int filingStatus = f.getFilingStatus();
 		int numOfAdults = f.getNumAdults();
-		int numOfChildren = f.getNumChildren();
 		boolean isValidFiling = true;
 
 		switch(filingStatus) {

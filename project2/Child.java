@@ -17,12 +17,7 @@ public class Child extends Person {
 
 	public String toString() {
 
-		if(school == null) {
-
-			return null;
-		}
-
-		return super.toString() + " " + school;
+		return super.toString() + " " + ((school == null) ? "" : school);
 	}
 
 	public float getTuition() {
@@ -36,7 +31,6 @@ public class Child extends Person {
 		float exemptionReduction = 0f;
 		float childBaseExemption = Taxation.childBaseExemption;
 		int numOfChildren = f.getNumChildren();
-		Person[] people = f.getPeople();
 		float exemptedIncome = this.getIncome();
 
 		for(int i = 3; i <= numOfChildren; i++) {
