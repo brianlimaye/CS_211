@@ -87,14 +87,13 @@ public class Family {
 
 		float taxableIncome = getTaxableIncome();
 		float halfMedianIncome = Taxation.medianIncomePerCapita / 2;
-		int bracket;
 
 		if(taxableIncome > halfMedianIncome) {
 
 			return 0.0f;
 		}
 
-		bracket = 1;
+		int bracket = 1;
 
 		if((filingStatus == 1) && (Float.compare(taxableIncome, 10000f) > 0)) {
 
