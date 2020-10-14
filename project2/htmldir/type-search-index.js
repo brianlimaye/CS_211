@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"<Unnamed>","l":"Adult"},{"l":"All Classes","url":"allclasses-index.html"},{"p":"<Unnamed>","l":"Analytics"},{"p":"<Unnamed>","l":"Child"},{"p":"<Unnamed>","l":"Family"},{"p":"<Unnamed>","l":"IncomeBrackets"},{"p":"<Unnamed>","l":"Person"},{"p":"<Unnamed>","l":"Taxation"},{"p":"<Unnamed>","l":"TaxYear"}]
