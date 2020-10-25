@@ -33,7 +33,7 @@ public class PullUp extends Endurance {
 
 	private double getCorrespondingMET(Intensity intensity) {
 
-		String exercise = "Pull-Up"; //Gets corresponding key for MET lookup.
+		String exercise = "PullUp"; //Gets corresponding key for MET lookup.
 		int index = -1;
 
 		//Gets corresponding index for MET lookup based on intensity.
@@ -60,6 +60,6 @@ public class PullUp extends Endurance {
 	@Override 
 	public String description() {
 
-		return this.getClass().getName(); //Gets the class name of the Squat class.
+		return this.getClass().getName(); //Gets the class name of the Pull-up class.
 	}
 }

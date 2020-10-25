@@ -33,7 +33,7 @@ public class TaiChi extends Flexibility {
 
 	private double getCorrespondingMET(Intensity intensity) {
 
-		String exercise = "Tai Chi"; //Gets corresponding key for MET lookup.
+		String exercise = "TaiChi"; //Gets corresponding key for MET lookup.
 		int index = -1;
 
 		//Gets corresponding index for MET lookup based on intensity.

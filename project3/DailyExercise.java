@@ -168,7 +168,7 @@ public class DailyExercise {
 
 		for(Fitness f: exerciseList) {
 
-			if(deepEquals(targetMuscle, f.muscleTargeted())) { //Custom method that will check equality of two arrays based on their contents, rather than order.
+			if(partialEquals(targetMuscle, f.muscleTargeted())) { //Custom method that will check equality of two arrays based on their contents, rather than order.
 
 				metExercises.add(f);
 			}
@@ -208,7 +208,7 @@ public class DailyExercise {
 		return metExercises.toArray(new Fitness[metExercises.size()]); //Conversion to an array of Fitness exercises.
 	}
 
-	private boolean deepEquals(Muscle[] a, Muscle[] b) {
+	private boolean partialEquals(Muscle[] a, Muscle[] b) {
 
 		List<Muscle> listA = Arrays.<Muscle>asList(a); //Conversion to list of Muscles.
 		List<Muscle> listB = Arrays.<Muscle>asList(b); //Conversion to list of Muscles.

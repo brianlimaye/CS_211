@@ -169,36 +169,45 @@ public class WeeklyExercise {
 		ArrayList<Fitness> activities = new ArrayList<Fitness>();
 		double caloriesPerDay = weeklyCalorieTarget / days; //Calculates the amount of calories per day.
 		int duration;
-		boolean foundExercise = false;
 
 		int currentDay = 1; //Sets the current day to the first day of workouts.
 
 		while(currentDay <= days) {
 
-			foundExercise = false;
-			duration = 1; //Sets the default duration for each daily exercise.
-			activities.clear();
+			activities.clear(); //Clears the list activities when on another day.
+			
 			Fitness currentExercise = exerciseList.get(currentDay - 1); //Gets the current exercise for the given day.
-
-			while(!foundExercise) {
-
-				double caloriesBurned = currentExercise.calorieLoss(intensity, profile.getWeight(), duration); 
-
-				if(Double.compare(caloriesBurned, caloriesPerDay) > 0) {
-
-					duration--; //Truncates the duration when a match is found.
-					activities.add(currentExercise);
-					dailyExercises.add(new DailyExercise(activities, duration, caloriesPerDay, profile)); //Adds a new daily exercise when the correct amount of calories are burned for the day.
-					foundExercise = true;
-					break;
-				}
-
-				duration++; //Increments duration in order to find the correct amount of calories to be burned.
-			}
+		    
+		    duration = (int) (60 * (caloriesPerDay / (getCorrespondingMET(intensity, currentExercise) * profile.getWeight()))); //Calorie loss formula, solved for time :D.
+			
+			activities.add(currentExercise);
+			
+			dailyExercises.add(new DailyExercise(activities, duration, caloriesPerDay, profile)); //Adds a new daily exercise when the correct amount of calories are burned for the day.
 			++currentDay; //Moves on to the next day.
 		}
-
 		return dailyExercises;
+	}
+
+	private double getCorrespondingMET(Intensity intensity, Fitness f) {
+
+		String exercise = f.description(); //Gets corresponding key for MET lookup.
+		int index = -1;
+
+		//Gets corresponding index for MET lookup based on intensity.
+		switch(intensity) {
+
+			case HIGH:
+				index = 0;
+				break;
+			case MEDIUM:
+				index = 1;
+				break;
+			case LOW:
+				index = 2;
+				break;
+		}
+
+		return METInfo.metValues.get(exercise)[index];
 	}
 
 	/**

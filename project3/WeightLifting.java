@@ -33,7 +33,7 @@ public class WeightLifting extends Anaerobic {
 
 	private double getCorrespondingMET(Intensity intensity) {
 
-		String exercise = "Weightlifting"; //Sets corresponding key for MET lookup.
+		String exercise = "WeightLifting"; //Sets corresponding key for MET lookup.
 		int index = -1;
 
 		//Gets corresponding index for MET lookup based on intensity.
