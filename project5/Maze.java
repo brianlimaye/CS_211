@@ -25,7 +25,12 @@ public class Maze {
 		int currentRow = p.getRow();
 		int currentCol = p.getCol();
 
-		if(((currentRow >= maze.length) || (currentRow < 0)) || ((currentCol >= maze[0].length) || (currentCol < 0))) {
+		if((currentRow >= maze.length) || (currentRow < 0)) {
+
+			return false;
+		}
+
+		if((currentCol >= maze[currentRow].length) || (currentCol < 0)) {
 
 			return false;
 		}
@@ -38,7 +43,12 @@ public class Maze {
 		int currentRow = p.getRow();
 		int currentCol = p.getCol();
 
-		if(((currentRow >= maze.length) || (currentRow < 0)) || ((currentCol >= maze[0].length) || (currentCol < 0))) {
+		if((currentRow >= maze.length) || (currentRow < 0)) {
+
+			return false;
+		}
+
+		if((currentCol >= maze[currentRow].length) || (currentCol < 0)) {
 
 			return false;
 		}

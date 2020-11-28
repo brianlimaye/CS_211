@@ -57,4 +57,10 @@ public class MazePosition {
 		return "MazePosition (" + row + ", " + col + ")";
 	}
 
+	@Override
+	public int hashCode() {
+
+		return this.toString().hashCode();
+	}
+
 }

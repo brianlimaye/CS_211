@@ -39,19 +39,14 @@ public class MazeSolver {
 			return cpy;
 		}
 
-		else if((hasDuplicateLocations(visited)) || (!maze.isClear(p))) {
+		else if(!maze.isClear(p)) {
 
-			if(hasDuplicateLocations(visited)) {
-
-				visited.remove(p);
-			}
 			return null;
 		}
 
 		else if((!direction.equals("")) && (!foundGoal) && (maze.isClear(p))) {
 
 			directions.add(direction);
-			//System.out.println(directions);
 		}
 
 
@@ -105,29 +100,5 @@ public class MazeSolver {
 		}
 
 		return cpy;
-	}
-
-	private boolean hasDuplicateLocations(Collection<MazePosition> visited) {
-
-		ArrayList<MazePosition> tmp = new ArrayList<MazePosition>();
-
-		for(MazePosition e: visited) {
-
-			tmp.add(e);
-		}
-
-		for(int i = 0; i< tmp.size(); i++) {
-
-			MazePosition mp = tmp.get(i);
-			for(int j = i + 1; j < tmp.size(); j++) {
-
-				if(mp.equals(tmp.get(j))) {
-
-					return true;
-				}
-			}
-		}
-
-		return false;
 	}
 }
