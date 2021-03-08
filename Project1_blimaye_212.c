@@ -14,9 +14,9 @@
 #define NUM_MAZE_SPACES 2
 #define NUM_SKULL_SPACES 1
 const int gooseSpaces[NUM_GOOSE_SPACES] = {7, 11, 15};
-const int bridge_spaces[NUM_BRIDGE_SPACES] = {6};
-const int maze_spaces[NUM_MAZE_SPACES] = {13, 20};
-const int skull_spaces[NUM_SKULL_SPACES] = {23};
+const int BRIDGE_SPACES[NUM_BRIDGE_SPACES] = {6};
+const int MAZE_SPACES[NUM_MAZE_SPACES] = {13, 20};
+const int SKULL_SPACES[NUM_SKULL_SPACES] = {23};
 
 
 /*
@@ -30,7 +30,7 @@ int is_maze_space(int space);
 int is_skull_space(int space);
 int interpret_position(int old_space, int roll);
 int perform_turn(int old_space, char * name);
-int update_position(int old_space, int roll);
+int update_position(int old_space, int original_space, int roll);
 int fill_main_board(char * board, int player_pos_1, int player_pos_2, int pos, int i);
 int fill_last_slot(char * board, int player_pos_1, int player_pos_2, int pos, int i);
 int read_seed(char * buffer);
@@ -65,7 +65,7 @@ int is_bridge_space(int space) {
 		/*
 		 *Checks if the given space is a "Bridge" space, or in the corresponding global array.
 		 */
-		if(bridge_spaces[i] == space) {
+		if(BRIDGE_SPACES[i] == space) {
 
 			return 1;
 		}
@@ -82,7 +82,7 @@ int is_maze_space(int space) {
 		/*
 		 *Checks if the given space is a "Maze" space, or in the corresponding global array.
 		 */
-		if(maze_spaces[i] == space) {
+		if(MAZE_SPACES[i] == space) {
 
 			return 1;
 		}
@@ -99,7 +99,7 @@ int is_skull_space(int space) {
 		/*
 		 *Checks if the given space is a "Skull" space, or in the corresponding global array.
 		 */
-		if(skull_spaces[i] == space) {
+		if(SKULL_SPACES[i] == space) {
 
 			return 1;
 		}
@@ -108,7 +108,7 @@ int is_skull_space(int space) {
 	return 0;
 }
 
-int update_position(int old_space, int roll) {
+int update_position(int old_space, int original_space, int roll) {
 	
 	int is_clear;
 	int current_space = old_space;
@@ -136,7 +136,7 @@ int update_position(int old_space, int roll) {
 			is_clear = 0;
 		}
 		else if(is_maze_space(current_space) == 1) {
-			current_space--;
+			current_space = original_space;
 			printf("-go to space %d ", current_space);
 			/*
 			 *Sets the is_clear flag to repeat the loop in the case where another "special" space is landed on.
@@ -177,7 +177,7 @@ int interpret_position(int old_space, int roll) {
 	/*
 	 *Function to adjust the position in the case where a special space is landed on...
 	 */
-	current_space = update_position(current_space, roll);
+	current_space = update_position(current_space, old_space, roll);
 
 	return current_space;
 }
@@ -224,6 +224,7 @@ int roll_Dice(void) {
  */
 int fill_main_board(char * board, int player_pos_1, int player_pos_2, int pos, int i) {
 
+		int at_current = 0;
 		/*
 		 *Increments the pointer to the next empty position to fill :)
 		 */
@@ -232,7 +233,6 @@ int fill_main_board(char * board, int player_pos_1, int player_pos_2, int pos, i
 		 *at_current represents a flag that indicates whether a numerical value or the user icons should be enclosed by brackets.
 		 *0 indicates that a numerical value should be enclosed, 1 being that the character icon(s) should be enclosed instead.
 		 */
-		int at_current = 0;
 		*board = '[';
 		/*
 		 *Increments the next position of the pointer to set, in addition to the pointer itself.
@@ -300,7 +300,7 @@ int fill_main_board(char * board, int player_pos_1, int player_pos_2, int pos, i
 
 int fill_last_slot(char * board, int player_pos_1, int player_pos_2, int pos, int i) {
 
-	
+	int at_current = 0;
     /*
      *Increments the pointer to the next empty position to fill :)
      */
@@ -309,7 +309,6 @@ int fill_last_slot(char * board, int player_pos_1, int player_pos_2, int pos, in
 	 *at_current represents a flag that indicates whether a numerical value or the user icons should be enclosed by brackets.
 	 *0 indicates that a numerical value should be enclosed, 1 being that the character icon(s) should be enclosed instead.
 	 */	
-	int at_current = 0;
 	*board = '<';
 	board++; pos++;
 
