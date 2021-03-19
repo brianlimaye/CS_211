@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define MAX_SIZE 1000
+
 void clean_up(char ** names, int * ages, int n);
 
 void clean_up(char ** names, int * ages, int n) {
@@ -28,6 +30,7 @@ int main() {
 	//Problem 1
 	int i;
 	int n;
+	int m = -1;
 	int char_count;
 	int exit_code = 1;
 
@@ -37,10 +40,20 @@ int main() {
 	printf("Please enter in the number of students to be recorded. ");
 	
 	char_count = scanf("%d", &n);
+	if (char_count < 0)
+	{
+		goto exit;
+	}
 
 
 	if(n < 0) {
 		printf("Invalid input...");
+		goto exit;
+	}
+
+	if (n > MAX_SIZE)
+	{
+		printf("Cannot process more than %i students!", MAX_SIZE);
 		goto exit;
 	}
 
@@ -62,11 +75,17 @@ int main() {
 		names[i] = (char *) malloc(15 * sizeof(char));
 		printf("Please enter in student #%d's name. ", i + 1);
 		char_count = scanf("%14s", names[i]);
-	
+		if (char_count < 0)
+		{
+			goto exit;
+		}
 
 		printf("Please enter in student #%d's age. ", i + 1);
 		char_count = scanf("%d", &(*(ages + i)));
-		
+		if (char_count < 0)
+		{
+			goto exit;
+		}
 	}
 
 	for(i = 0; i < n; i++) {
@@ -75,12 +94,21 @@ int main() {
 
 	//Problem 2
 
-	int m = -1;
 	printf("Please enter in any additional number of students that still need to be recorded. ");
 	char_count = scanf("%d", &m);
+	if (char_count < 0)
+	{
+		goto exit;
+	}
 
 	if(m < 0) {
 		printf("Invalid input...");
+		goto exit;
+	}
+
+	if (m > MAX_SIZE)
+	{
+		printf("Cannot process more than %i students!", MAX_SIZE);
 		goto exit;
 	}
 
@@ -101,9 +129,17 @@ int main() {
 		names[i] = (char *) malloc(15 * sizeof(char));
 		printf("Please enter in student #%d's name. ", i + 1);
 		char_count = scanf("%14s", names[i]);
+		if (char_count < 0)
+		{
+			goto exit;
+		}
 
 		printf("Please enter in student #%d's age. ", i + 1);
 		char_count = scanf("%d", &(*(ages + i)));
+		if (char_count < 0)
+		{
+			goto exit;
+		}
 	}
 
 	for(i = 0; i < (m + n); i++) {
