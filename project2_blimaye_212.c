@@ -3,11 +3,11 @@
 #include <string.h>
 #include <ctype.h>
 
-struct Words {
+typedef struct Words {
 
 	char ** words;
 	int num_of_words;
-} ;
+} Words;
 
 int display_menu(char buffer[50]);
 int generate_rand();
@@ -27,7 +27,7 @@ int find_nth_position(char * str, int n, int * reached_space);
 void init_words(char ** word_arr, int word_count);
 void fill_words(char ** word_arr, char * word, int n);
 char * word_to_lower(char * word);
-void clean_up(char ** word_arr, int word_count);
+void clean_up(struct Words ** words, int word_count);
 
 int display_menu(char buffer[50]) {
 
@@ -89,9 +89,7 @@ int prompt_cipher(char * cipher, struct Words ** words) {
 	int i;
 	char cipher_contents[10000];
 	char * word;
-	int last_pos;
-	int file_size;
-	int word_count;
+	int file_size = 0, word_count = 0;
 
 	
 	file = fopen(cipher, "r");
@@ -99,6 +97,7 @@ int prompt_cipher(char * cipher, struct Words ** words) {
 	if(file == NULL) {
 
 		printf("COULD NOT READ FILE.");
+
 		exit(-1);
 	}
 
@@ -106,9 +105,9 @@ int prompt_cipher(char * cipher, struct Words ** words) {
 	file_size = ftell(file);
 	fseek(file, 0, SEEK_SET);
 
-	fread(cipher_contents, file_size + 1, 1, file);
+	fread(cipher_contents, file_size, 1, file);
 
-	cipher_contents[file_size + 1] = '\0';
+	cipher_contents[file_size] = '\0';
 
 
 	word_count = determine_word_count(cipher_contents);
@@ -129,7 +128,6 @@ int prompt_cipher(char * cipher, struct Words ** words) {
 
 char * prompt_secret() {
 
-	int i;
 	int len;
 	char secret_message[1500];
 
@@ -146,28 +144,18 @@ char * prompt_secret() {
 
 void encode_message(char * message, struct Words ** words, int word_len, int rand) {
 
-	int i, j = 0;
-	int pos;
-	int size = 0;
-	int found_index;
-	int index_in_word;
+	int i, index_in_word, found_index, pos, index, j = 0, size = 0;
 	char curr_char;
 	char ** word_list = (*words)->words;
 	char * curr_word;
 	int len = strlen(message);
-	int index;
 
 	char * encrpyted_message = (char *) malloc(10 * len * sizeof(char));
 
-	printf("len is: %d\n", len);
-
 	for(i = 0; i < len; i++) {
 
-		pos = 0;
-		j = 0;
-		found_index = -1;
-		index_in_word = -1;
-		index = 0;
+		pos = 0, j = 0, index = 0;
+		found_index = -1, index_in_word = -1;
 		curr_char = tolower(*(message + i));
 
 		if(isspace(curr_char)) { 
@@ -178,19 +166,15 @@ void encode_message(char * message, struct Words ** words, int word_len, int ran
 		while(j < word_len) {
 
 			curr_word = *(word_list + j);
-			printf("the current word was: %s\n", curr_word);
 
 			if((found_index = find_nth_index(curr_word, curr_char, rand, &index)) != -1) {
 
-				printf("%c was found in %s at position %d\n", curr_char, curr_word, pos);
 				index_in_word = strcspn(curr_word, &curr_char);
-				printf("%c is located in %s at position %d\n", curr_char, curr_word, index_in_word);
 				break;
 			}
 			else {
 
 				pos++;
-				printf("pos was: %d\n", pos);
 			}
 
 			if((j == word_len - 1) && (index != 0)) {
@@ -216,16 +200,14 @@ void encode_message(char * message, struct Words ** words, int word_len, int ran
 		}
 	}
 
-	printf("encrpyted message is: %s\n", encrpyted_message);
-
 	write_message(encrpyted_message, size);
+	free(encrpyted_message);
 }
 
 int read_contents(char ** file_contents) {
 
 	FILE * f;
-	int len;
-	int file_size;
+	int len, file_size;
 	char buffer[50];
 
 	do {
@@ -257,9 +239,9 @@ int read_contents(char ** file_contents) {
 		exit(-1);
 	}
 
-	fread(*file_contents, file_size + 1, 1, f);
+	fread(*file_contents, file_size, 1, f);
 
-	(*file_contents)[file_size + 1] = '\0';
+	(*file_contents)[file_size] = '\0';
 	fclose(f);
 
 	return file_size;
@@ -284,24 +266,26 @@ int get_num_indices(char * encoded_buffer) {
 
 char * decode_message(struct Words * words, int word_len) {
 
-	int i, j;
-	int reached_space;
-	int index = 0;
-	int index_in_word = 0;
-	char ** word_list = words->words;
-	char * curr_word;
+	int i, len, reached_space, position, index = 0, offset = 0;
 	char curr_char;
-	int position;
-	char * encoded_buffer;
-	read_contents(&encoded_buffer);
-	int len = get_num_indices(encoded_buffer);
+	char ** word_list = words->words;
 
-	char buffer[len / 2 + 1];
+	char * curr_word = NULL;
+	char * encoded_buffer;
+	char * cpy;
+	char * buffer;
+
+	read_contents(&encoded_buffer);
+	len = get_num_indices(encoded_buffer);
+
+	buffer = (char *) malloc((len / 2) * sizeof(char) + 1);
 
 	for(i = 0; i < len; i++) {
 
 		reached_space = 0;
-		position = find_nth_position(encoded_buffer, i, &reached_space);
+		cpy = strdup(encoded_buffer);
+		position = find_nth_position(cpy, i, &reached_space);
+		free(cpy);
 
 		if(reached_space) { buffer[index++] = ' '; }
 
@@ -310,12 +294,13 @@ char * decode_message(struct Words * words, int word_len) {
 		if(position == -2) {
 
 			buffer[index++] = '#';
+			offset++;
 			continue;
 		}
 
 		position %= word_len;
 
-		if(i % 2 == 0) {
+		if((i - offset) % 2 == 0) {
 
 			curr_word = *(word_list + position);
 		}
@@ -330,7 +315,7 @@ char * decode_message(struct Words * words, int word_len) {
 
 	printf("decoded message: %s\n", buffer);
 	free(encoded_buffer);
-	return strdup(buffer);
+	return buffer;
 }
 
 void write_message(char * encrpyted_message, int size) {
@@ -362,8 +347,7 @@ void write_message(char * encrpyted_message, int size) {
 
 int determine_word_count(char * cipher_contents) {
 
-	int i, word_count = 0;
-	int reached_space = 0;
+	int i, word_count = 0, reached_space = 0;
 	int len = strlen(cipher_contents);
 
 	for(i = 0; i< len; i++) {
@@ -410,7 +394,6 @@ int find_nth_index(char * str, char needle, int n, int * current_index) {
 	int i;
 	char curr_char;
 	int len = strlen(str);
-	//printf("len of word is: %d\n", len);
 
 	for(i = 0; i < len; i++) {
 
@@ -469,13 +452,11 @@ char * find_nth_word(char * cipher, int n) {
 
 int find_nth_position(char * str, int n, int * reached_space) {
 
-	int i;
 	int count = 0;
-	int index = 0;
-	char * tmp = strdup(str);
-	int len = strlen(str);
 
-	char * positions = strtok(tmp, ",");
+	char * positions = strtok(str, ",");
+
+	printf("first token is: %s\n", positions);
 
 	while(positions != NULL) {
 
@@ -483,10 +464,11 @@ int find_nth_position(char * str, int n, int * reached_space) {
 
 			count++;
 			positions = strtok(NULL, ",");
+			printf("positions: %s\n", positions);
 			continue;
 		}
 
-		free(tmp);
+		printf("positions now is: %s\n", positions);
 
 		if(strncmp(positions, "#", 1) == 0) {
 
@@ -501,17 +483,16 @@ int find_nth_position(char * str, int n, int * reached_space) {
 		return atoi(positions);
 	}
 
-	free(tmp);
 	return -1;
 }
 
 void init_words(char ** word_arr, int word_count) {
 
-	int i = 0;
+	int i;
 
 	for(i = 0; i< word_count; i++) {
 
-		*(word_arr + i) = (char *) malloc(16 * sizeof(char));
+		word_arr[i] = (char *) malloc(16 * sizeof(char));
 	}
 }
 
@@ -519,7 +500,6 @@ void fill_words(char ** word_arr, char * word, int n) {
 
 	if(word != NULL) {
 
-		//printf("That word was: %s\n", word);
 		*(word_arr + n) = word_to_lower(word);
 	}
 }
@@ -537,36 +517,33 @@ char * word_to_lower(char * word) {
 	return word;
 }
 
-void clean_up(char ** word_arr, int word_count) {
+void clean_up(struct Words ** words, int word_count) {
 
 	int i;
+	char * str;
 
-	if(word_arr != NULL) {
-
+	if((*words) != NULL) {
+		
 		for(i = 0; i< word_count; i++) {
 
-			free(*(word_arr + i));
+			free((*words)->words[i]);
 		}
+		free((*(words))->words);
+		free(*words);
 	}
-
-	free(word_arr);
 }
 
 int main(void) {
 
 	struct Words * words = (struct Words *) malloc(1 * sizeof(struct Words));
 
-	int res = 2;
 	char input_buffer[50];
 	char * secret_message;
-	char * encoded_file;
 	char * decoded_message;
 	char * file_name;
 	char input;
 	int rand;
-	int i;
-	int word_len;
-	int encrypt_len = 0;
+	int word_len = 0;
 	int has_file = 0;
 
 	srand(841);
@@ -583,11 +560,13 @@ int main(void) {
 			has_file = 1;
 			file_name = read_cipher(input_buffer);
 			word_len = prompt_cipher(file_name, &words);
+			printf("word len is: %d\n", word_len);
 		}
 
 		if(input == 2) {
 
 			if(!has_file) {
+				file_name = read_cipher(input_buffer);
 				word_len = prompt_cipher(input_buffer, &words);
 				has_file = 1;
 			}
@@ -600,12 +579,12 @@ int main(void) {
 		if(input == 3) {
 
 			if(!has_file) {
+				file_name = read_cipher(input_buffer);
 				word_len = prompt_cipher(input_buffer, &words);
 				has_file = 1;
 			}
 
 			decoded_message = decode_message(words, word_len);
-			//printf("Decoded message was: %s\n", decode_message);
 			free(decoded_message);
 		}
 
@@ -614,7 +593,7 @@ int main(void) {
 		}
 	}
 
-	clean_up(words->words, word_len);
+	clean_up(&words, word_len);
 
 	return 0;
 }
