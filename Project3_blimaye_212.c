@@ -97,7 +97,7 @@ movieNode * scan_movie_file(char * file_name) {
 		 */
 		if(i % 3 == 0) {
 
-			strcpy(title, input_buffer);
+			snprintf(title, 35, "%s", input_buffer);
 			i++;
 			continue;
 		}
@@ -107,7 +107,7 @@ movieNode * scan_movie_file(char * file_name) {
 		 */
 		else if(i % 3 == 1) {
 
-			strcpy(genre, input_buffer);
+			snprintf(genre, 35, "%s", input_buffer);
 			i++;
 			continue;
 		}
@@ -122,6 +122,7 @@ movieNode * scan_movie_file(char * file_name) {
 		}
 	}
 
+	fclose(f);
 	return head;
 }
 
@@ -205,8 +206,8 @@ movieNode * createmovieNode(char *title, char *genre, double duration) {
 		exit(-1);
 	}
 
-	strcpy(mn->title, title);
-	strcpy(mn->genre, genre);
+	snprintf(mn->title, 35, "%s", title);
+	snprintf(mn->genre, 35, "%s", genre);
 	mn->duration = duration;
 
 	return mn;
@@ -508,16 +509,23 @@ int perform_library_operation(movieNode * head, int num) {
 
 int prompt_position(char buffer[50]) {
 
-	char * endptr;
-	int position;
+	char * endptr = NULL;
+	int len;
+	int position = 0;
 
 	do {
 		endptr = NULL;
 		printf("\nPlease enter in a non-negative position to insert.\n");
 		fgets(buffer, 50, stdin);
 		position = strtol(buffer, &endptr, 10);
+		len = strlen(endptr);
+
+		if((position == 0) && (len == 1)) {
+
+			break;
+		}
 	}
-	while((position <= 0) && (endptr != NULL));
+	while((len != 1) || (position < 0));
 
 	return position;
 }
@@ -618,7 +626,7 @@ movieNode * removemovie(movieNode ** head, movieNode * remNode) {
 	/*
 	 *If the removed node was found in the list, it will be removed by modifying previous->next and removed->next.
 	 */
-	if(removed != NULL) {
+	if((prev != NULL) && (removed != NULL)) {
 
 		prev->next = curr;
 		removed->next = NULL;
@@ -636,6 +644,7 @@ int deletemovie(movieNode ** head, movieNode *delNode) {
 	 */
 	if(delNode == *head) {
 
+		printf("head");
 		free(delNode);
 		return 0;
 	}
@@ -713,7 +722,7 @@ movieNode * loadwatchlist() {
 	char file_name[50];
 	char title[35];
 	char genre[35];
-	double duration;
+	double duration = 0.0;
 	movieNode * head;
 	movieNode * curr;
 	int pos = 1;
@@ -738,11 +747,11 @@ movieNode * loadwatchlist() {
 		switch(pos) {
 
 			case 1:
-				strcpy(title, tmp_buffer);
+				snprintf(title, 35, "%s", tmp_buffer);
 				title[strcspn(title, "\n")] = '\0';
 				break;
 			case 2:
-				strcpy(genre, tmp_buffer);
+				snprintf(genre, 35, "%s", tmp_buffer);
 				genre[strcspn(genre, "\n")] = '\0';
 				break;
 			case 3:
@@ -758,25 +767,26 @@ movieNode * loadwatchlist() {
 		pos++;
 	}
 
+	fclose(f);
+
 	return head;
 }
 
 void clean_up(movieNode ** head) {
 
-	movieNode * curr = *head;
+	movieNode * curr = (*head)->next;
 	movieNode * next = NULL;
+	int i = 0;
 
-	if(curr != NULL) {
+	while(curr != NULL) {
 
-		while(curr != NULL) {
-
-			next = curr->next;
-			deletemovie(head, curr);
-			curr = next;
-		}
+		next = curr->next;
+		deletemovie(head, curr);
+		curr = next;
+		++i;
 	}
 
-	head = NULL;
+	free(*head);
 }
 
 int main(int argc, char ** argv) {
